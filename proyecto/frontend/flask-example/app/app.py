@@ -1,5 +1,5 @@
 from flask import Flask, render_template, send_from_directory
-from flask_login import LoginManager, login_manager
+from flask_login import LoginManager, login_manager, current_user
 
 # Usuarios
 from models import users
@@ -23,8 +23,10 @@ def hello_world():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('index'))
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    else:
+        return render_template('login.html') #, form=form)
     # form = LoginForm()
     # if form.validate_on_submit():
     #     user = get_user(form.email.data)
@@ -34,7 +36,6 @@ def login():
     #         if not next_page or url_parse(next_page).netloc != '':
     #             next_page = url_for('index')
     #         return redirect(next_page)
-    return render_template('login.html') #, form=form)
 
 @login_manager.user_loader
 def load_user(user_id):
