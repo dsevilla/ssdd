@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, url_for, request, redirect
 from flask_login import LoginManager, login_manager, current_user
 
 # Usuarios
@@ -18,7 +18,7 @@ def serve_static(path):
     return send_from_directory('static', path)
 
 @app.route('/')
-def hello_world():
+def index():
     return render_template('index.html', name="diego")
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -26,7 +26,13 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     else:
-        return render_template('login.html') #, form=form)
+        error = None
+        if request.method == "POST":
+            if request.form['email'] != 'admin' or request.form['password'] != 'admin':
+                error = 'Invalid Credentials. Please try again.'
+            else:
+                return redirect(url_for('index'))
+    return render_template('login.html',  error=error)
     # form = LoginForm()
     # if form.validate_on_submit():
     #     user = get_user(form.email.data)
