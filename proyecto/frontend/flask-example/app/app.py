@@ -1,12 +1,12 @@
 from flask import Flask, render_template, send_from_directory, url_for, request, redirect
-from flask_login import LoginManager, login_manager, current_user
+from flask_login import LoginManager, login_manager, current_user, login_user
 
 # Usuarios
-from models import users
+from models import users, User
 
 app = Flask(__name__, static_url_path='')
 login_manager = LoginManager()
-login_manager.init_app(app)
+login_manager.init_app(app) # Para mantener la sesión
 
 # Configurar el secret_key. OJO, no debe ir en un servidor git público.
 # Python ofrece varias formas de almacenar esto de forma segura, que
@@ -19,7 +19,7 @@ def serve_static(path):
 
 @app.route('/')
 def index():
-    return render_template('index.html', name="diego")
+    return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -28,9 +28,13 @@ def login():
     else:
         error = None
         if request.method == "POST":
-            if request.form['email'] != 'admin' or request.form['password'] != 'admin':
+            if request.form['email'] != 'admin@um.es' or request.form['password'] != 'admin':
                 error = 'Invalid Credentials. Please try again.'
             else:
+                user = User(1, 'admin', request.form['email'].encode('utf-8'),
+                            request.form['password'].encode('utf-8'))
+                users.append(user)
+                login_user(user)
                 return redirect(url_for('index'))
     return render_template('login.html',  error=error)
     # form = LoginForm()

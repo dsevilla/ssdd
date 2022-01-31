@@ -5,7 +5,6 @@ users = []
 
 class User(UserMixin):
 
-
     def __init__(self, id, name, email, password, is_admin=False):
         self.id = id
         self.name = name
