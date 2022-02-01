@@ -1,5 +1,5 @@
 from flask import Flask, render_template, send_from_directory, url_for, request, redirect
-from flask_login import LoginManager, login_manager, current_user, login_user
+from flask_login import LoginManager, login_manager, current_user, login_user, login_required
 
 # Usuarios
 from models import users, User
@@ -46,6 +46,13 @@ def login():
     #         if not next_page or url_parse(next_page).netloc != '':
     #             next_page = url_for('index')
     #         return redirect(next_page)
+
+
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html')
+
 
 @login_manager.user_loader
 def load_user(user_id):
