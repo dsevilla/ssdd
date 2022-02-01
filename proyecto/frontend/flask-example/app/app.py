@@ -59,7 +59,6 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-
 @login_manager.user_loader
 def load_user(user_id):
     for user in users:
