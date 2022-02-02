@@ -4,6 +4,9 @@ from flask_login import LoginManager, login_manager, current_user, login_user, l
 # Usuarios
 from models import users, User
 
+# Login
+from forms import LoginForm
+
 app = Flask(__name__, static_url_path='')
 login_manager = LoginManager()
 login_manager.init_app(app) # Para mantener la sesión
@@ -27,25 +30,18 @@ def login():
         return redirect(url_for('index'))
     else:
         error = None
-        if request.method == "POST":
-            if request.form['email'] != 'admin@um.es' or request.form['password'] != 'admin':
+        form = LoginForm(request.form)
+        if request.method == "POST" and  form.validate():
+            if form.email.data != 'admin@um.es' or form.password.data != 'admin':
                 error = 'Invalid Credentials. Please try again.'
             else:
-                user = User(1, 'admin', request.form['email'].encode('utf-8'),
-                            request.form['password'].encode('utf-8'))
+                user = User(1, 'admin', form.email.data.encode('utf-8'),
+                            form.password.data.encode('utf-8'))
                 users.append(user)
-                login_user(user)
+                login_user(user, remember=form.remember_me.data)
                 return redirect(url_for('index'))
-    return render_template('login.html',  error=error)
-    # form = LoginForm()
-    # if form.validate_on_submit():
-    #     user = get_user(form.email.data)
-    #     if user is not None and user.check_password(form.password.data):
-    #         login_user(user, remember=form.remember_me.data)
-    #         next_page = request.args.get('next')
-    #         if not next_page or url_parse(next_page).netloc != '':
-    #             next_page = url_for('index')
-    #         return redirect(next_page)
+
+        return render_template('login.html', form=form,  error=error)
 
 
 @app.route('/profile')
