@@ -1,5 +1,5 @@
 from flask import Flask, render_template, send_from_directory, url_for, request, redirect
-from flask_login import LoginManager, login_manager, current_user, login_user, login_required
+from flask_login import LoginManager, login_manager, current_user, login_user, login_required, logout_user
 
 # Usuarios
 from models import users, User
@@ -52,6 +52,12 @@ def login():
 @login_required
 def profile():
     return render_template('profile.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 @login_manager.user_loader

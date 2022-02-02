@@ -35,7 +35,7 @@
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Mi magnífica aplicación</a>
+      <a class="navbar-brand" href="{{ url_for('index') }}">Mi magnífica aplicación</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -53,11 +53,15 @@
 
           {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="/profile">Profile</a>
+            <a class="nav-link" href="{{ url_for("profile") }}">Profile</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
+            <a class="nav-link" href="{{ url_for("logout") }}">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for("login") }}">Login!</a>
           </li>
           {% endif %}
 
