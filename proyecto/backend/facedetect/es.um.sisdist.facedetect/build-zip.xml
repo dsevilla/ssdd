@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?eclipse.ant.import?>
+
+<project default="zip" name="Crear el fichero Zip para distribuir">
+	
+	<property name="zipfile" value="../${ant.project.name}.zip" />
+	
+	<target name="zip">
+		<delete file="${zipfile}" />
+		<zip destfile="${zipfile}" basedir=".."
+			includes="${ant.project.name}/**"
+			excludes="${ant.project.name}/build-zip.xml
+			    ${ant.project.name}/build.xml
+		     	${ant.project.name}/target/
+				${ant.project.name}/bin/" />
+	</target>
+</project>
