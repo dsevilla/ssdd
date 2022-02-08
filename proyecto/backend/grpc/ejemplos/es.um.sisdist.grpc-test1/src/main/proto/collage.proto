@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+option java_package = "es.um.sisdist.collage";
+
+package collage;
+
+service Collage 
+{
+  rpc StoreImage(ImageData) returns (google.protobuf.Empty);
+  rpc StoreImages(stream ImageData) returns (google.protobuf.Empty);
+  rpc ObtainImage (ImageSpec) returns (ImageData);
+  rpc ObtainCollage (stream ImageSpec) returns (ImageData);
+}
+
+message ImageData
+{
+	string id = 1;
+	bytes data = 2; 
+}
+
+message ImageSpec
+{
+	string id = 1;
+}
