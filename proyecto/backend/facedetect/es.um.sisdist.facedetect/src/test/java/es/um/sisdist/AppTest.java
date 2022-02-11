@@ -1,4 +1,4 @@
-package es.um.ssdd;
+package es.um.sisdist;
 
 import static org.junit.Assert.*;
 

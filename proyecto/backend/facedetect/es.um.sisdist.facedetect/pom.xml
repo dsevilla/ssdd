@@ -12,6 +12,18 @@
 		<mainClass>es.um.sisdist.facedetect.VideoFaces</mainClass>
 		<exec.mainClass>${mainClass}</exec.mainClass>
 	</properties>
+	<dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>5.8.2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.openimaj</groupId>
@@ -43,12 +55,11 @@
 			<version>${openimaj.version}</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 	<profiles>
 		<profile>
@@ -89,21 +100,16 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.8.1</version>
 				<configuration>
 					<source>11</source>
 					<target>11</target>
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.9</version>
-				<configuration>
-					<downloadSources>true</downloadSources>
-					<downloadJavadocs>true</downloadJavadocs>
-				</configuration>
-			</plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
 		</plugins>
 	</build>
 </project>
