@@ -1,4 +1,4 @@
-package es.um.sisdist.backend.Service;
+package es.um.sisdist.videofaces.backend.Service;
 
 import java.net.URI;
 
