@@ -16,8 +16,8 @@ import jakarta.ws.rs.core.Response;
 
 // POJO, no interface no extends
 
-@Path("/user")
-public class UserEndpoint
+@Path("/users")
+public class UsersEndpoint
 {
     // This method is called if TEXT_PLAIN is request
     @GET
