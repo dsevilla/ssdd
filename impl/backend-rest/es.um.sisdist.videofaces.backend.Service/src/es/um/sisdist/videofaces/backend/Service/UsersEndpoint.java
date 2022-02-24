@@ -13,6 +13,8 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/users")
 public class UsersEndpoint
 {
+    private AppLogicImpl impl = AppLogicImpl.getInstance();
+
     // This method is called if TEXT_PLAIN is request
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -26,6 +28,6 @@ public class UsersEndpoint
     @Produces(MediaType.APPLICATION_JSON)
     public User getUserInfo(@PathParam("username") String username)
     {
-        return AppLogicImpl.getInstance().getUser(username);
+        return impl.getUser(username);
     }
 }
