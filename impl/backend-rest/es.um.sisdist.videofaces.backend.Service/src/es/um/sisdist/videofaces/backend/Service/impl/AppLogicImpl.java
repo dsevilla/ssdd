@@ -3,10 +3,12 @@
  */
 package es.um.sisdist.videofaces.backend.Service.impl;
 
+import java.util.Optional;
+
 import es.um.sisdist.videofaces.backend.dao.IDAOFactory;
 import es.um.sisdist.videofaces.backend.dao.user.DAOFactory;
 import es.um.sisdist.videofaces.backend.dao.user.IUserDAO;
-import es.um.sisdist.videofaces.models.User;
+import es.um.sisdist.videofaces.backend.dao.user.models.User;
 
 /**
  * @author dsevilla
@@ -30,8 +32,15 @@ public class AppLogicImpl
 		return instance;
 	}
 	
-	public User getUser(String userId)
+	public Optional<User> getUserByEmail(String userId)
 	{
-		return new User(userId, userId, userId);
+		Optional<User> u = dao.getUserByEmail(userId);
+		return u;
 	}
+
+	public User getUserById(String userId)
+	{
+		return new User(userId, userId, userId, userId,1);
+	}
+
 }

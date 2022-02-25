@@ -2,7 +2,7 @@ version: '2'
 services:
 
   videofaces-mysql:
-    build: mysql/.
+    build: videofaces-mysql/.
     ports:
       - 3306:3306
     environment:
