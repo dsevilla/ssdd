@@ -20,5 +20,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/es.um.sisdist.videofaces.backend.dao"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

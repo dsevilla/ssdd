@@ -4,6 +4,8 @@
 package es.um.sisdist.videofaces.backend.Service.impl;
 
 import es.um.sisdist.videofaces.backend.dao.IDAOFactory;
+import es.um.sisdist.videofaces.backend.dao.user.DAOFactory;
+import es.um.sisdist.videofaces.backend.dao.user.IUserDAO;
 import es.um.sisdist.videofaces.models.User;
 
 /**
@@ -12,12 +14,15 @@ import es.um.sisdist.videofaces.models.User;
  */
 public class AppLogicImpl
 {
-    static IDAOFactory daoFactory;
+    IDAOFactory daoFactory;
+    IUserDAO dao;
     
 	static AppLogicImpl instance = new AppLogicImpl();
 	
 	private AppLogicImpl()
 	{
+		daoFactory = new DAOFactory();
+		dao = daoFactory.createSQLUserDAO();
 	}
 	
 	public static AppLogicImpl getInstance()
