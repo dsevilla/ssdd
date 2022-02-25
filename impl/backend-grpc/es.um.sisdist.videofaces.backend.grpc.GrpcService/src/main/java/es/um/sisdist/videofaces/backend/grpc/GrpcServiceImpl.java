@@ -13,7 +13,7 @@ class GrpcServiceImpl extends GrpcServiceGrpc.GrpcServiceImplBase
 	private Map<String, ImageData> imageMap;
 	private Logger logger;
 	
-    public CollageImpl(Logger logger) 
+    public GrpcServiceImpl(Logger logger) 
     {
 		super();
 		imageMap = new HashMap<>();

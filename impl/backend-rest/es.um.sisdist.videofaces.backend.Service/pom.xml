@@ -72,10 +72,16 @@
       <artifactId>org.eclipse.persistence.moxy</artifactId>
       <version>3.0.2</version>
     </dependency>
-    
+
+    <!-- Locales -->    
     <dependency>
      <groupId>es.um.sisdist.videofaces.backend</groupId>
       <artifactId>dao</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+     <groupId>es.um.sisdist.videofaces.backend.grpc</groupId>
+      <artifactId>GrpcService</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>

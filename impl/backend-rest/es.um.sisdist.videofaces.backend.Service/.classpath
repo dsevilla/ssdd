@@ -20,5 +20,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/es.um.sisdist.videofaces.backend.dao"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/es.um.sisdist.videofaces.backend.grpc.GrpcService"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

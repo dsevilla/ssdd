@@ -7,7 +7,7 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-    <mainClass>es.um.sisdist.helloworld.HelloWorldServer</mainClass>
+    <mainClass>es.um.sisdist.videofaces.backend.grpc.GrpcServiceServer</mainClass>
     <exec.mainClass>${mainClass}</exec.mainClass>
   </properties>
   <dependencies>

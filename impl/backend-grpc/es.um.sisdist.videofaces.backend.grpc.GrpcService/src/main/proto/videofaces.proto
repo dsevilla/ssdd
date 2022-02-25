@@ -5,9 +5,9 @@ import "google/protobuf/empty.proto";
 option java_multiple_files = true;
 option java_package = "es.um.sisdist.videofaces.backend.grpc";
 
-package GrpcService;
+package es.um.sisdist.videofaces.backend.grpc;
 
-service Collage
+service GrpcService
 {
   rpc StoreImage(ImageData) returns (google.protobuf.Empty);
   rpc StoreImages(stream ImageData) returns (google.protobuf.Empty);
