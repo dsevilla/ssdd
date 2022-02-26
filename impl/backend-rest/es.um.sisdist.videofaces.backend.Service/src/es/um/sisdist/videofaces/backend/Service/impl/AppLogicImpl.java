@@ -5,9 +5,9 @@ package es.um.sisdist.videofaces.backend.Service.impl;
 
 import java.util.Optional;
 
+import es.um.sisdist.videofaces.backend.dao.DAOFactoryImpl;
 import es.um.sisdist.videofaces.backend.dao.IDAOFactory;
 import es.um.sisdist.videofaces.backend.dao.models.User;
-import es.um.sisdist.videofaces.backend.dao.user.DAOFactory;
 import es.um.sisdist.videofaces.backend.dao.user.IUserDAO;
 
 /**
@@ -23,7 +23,7 @@ public class AppLogicImpl
 	
 	private AppLogicImpl()
 	{
-		daoFactory = new DAOFactory();
+		daoFactory = new DAOFactoryImpl();
 		dao = daoFactory.createSQLUserDAO();
 	}
 	
