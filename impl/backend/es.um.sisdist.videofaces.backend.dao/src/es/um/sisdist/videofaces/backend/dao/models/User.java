@@ -1,7 +1,7 @@
 /**
  *
  */
-package es.um.sisdist.videofaces.backend.dao.user.models;
+package es.um.sisdist.videofaces.backend.dao.models;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

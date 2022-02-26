@@ -21,6 +21,7 @@ INSERT INTO users VALUES ("ddd", "dsevilla@um.es", "21232f297a57a5a743894a0e4a80
 CREATE TABLE IF NOT EXISTS videos(
        	id varchar(50),
 	userid varchar(50),
+	date text,
 	filename text,
 	process_status int, -- 0: processing, 1: processed
 	videodata LONGBLOB,

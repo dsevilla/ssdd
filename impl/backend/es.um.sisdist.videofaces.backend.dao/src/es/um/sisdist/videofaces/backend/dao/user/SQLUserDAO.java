@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import es.um.sisdist.videofaces.backend.dao.user.models.User;
+import es.um.sisdist.videofaces.backend.dao.models.User;
 
 /**
  * @author dsevilla

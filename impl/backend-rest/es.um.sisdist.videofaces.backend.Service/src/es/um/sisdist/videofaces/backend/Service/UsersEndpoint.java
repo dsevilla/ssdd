@@ -3,7 +3,7 @@ package es.um.sisdist.videofaces.backend.Service;
 import java.util.Optional;
 
 import es.um.sisdist.videofaces.backend.Service.impl.AppLogicImpl;
-import es.um.sisdist.videofaces.backend.dao.user.models.User;
+import es.um.sisdist.videofaces.backend.dao.models.User;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
