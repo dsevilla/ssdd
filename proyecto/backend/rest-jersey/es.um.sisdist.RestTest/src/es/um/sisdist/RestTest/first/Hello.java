@@ -85,4 +85,13 @@ public class Hello
     {
         System.out.println("Recibido item: " + i.getUri());
     }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("item")
+    public void newItemJSON(Item i)
+    {
+        System.out.println("Recibido item: " + i.getUri());
+    }
+
 }
