@@ -9,3 +9,9 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=videofaces
 
+  backend-rest:
+    image: dsevilla/videofaces-backend-rest:1.0
+    ports:
+      - 8080:8080
+    environment:
+      - SQL_SERVER=videofaces-mysql
