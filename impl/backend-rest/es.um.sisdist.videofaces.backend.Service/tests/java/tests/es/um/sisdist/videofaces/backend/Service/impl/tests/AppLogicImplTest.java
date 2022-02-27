@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import es.um.sisdist.videofaces.backend.Service.impl.AppLogicImpl;
-import es.um.sisdist.videofaces.backend.dao.user.models.User;
+import es.um.sisdist.videofaces.backend.dao.models.User;
 
 /**
  * @author dsevilla

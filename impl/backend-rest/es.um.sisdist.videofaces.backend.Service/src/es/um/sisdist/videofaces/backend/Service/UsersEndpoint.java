@@ -21,21 +21,6 @@ import jakarta.ws.rs.core.Response;
 public class UsersEndpoint
 {
     private AppLogicImpl impl = AppLogicImpl.getInstance();
-
-//    @GET
-//    @Path("/a")
-//    public String getA()
-//    {
-//    	return "A";
-//    }
-//    
-//    @GET
-//    @Path("/test")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response getTest()
-//    {
-//    	return Response.ok(new UserDTO("a", "b", "c", "d", "e", 0)).build();
-//    }
     
     @GET
     @Path("/{username}")

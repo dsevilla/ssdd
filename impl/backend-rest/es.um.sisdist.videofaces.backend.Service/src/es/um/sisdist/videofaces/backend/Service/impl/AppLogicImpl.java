@@ -55,7 +55,8 @@ public class AppLogicImpl
 		
 		if (u.isPresent())
 		{
-			if (User.md5pass(userToCheck.getPassword()) == u.get().getPassword_hash())
+			String hashed_pass = User.md5pass(userToCheck.getPassword());
+			if (0 == hashed_pass.compareTo(u.get().getPassword_hash()))
 				return Optional.of(UserDTOUtils.toDTO(u.get()));
 		}
 		

@@ -21,11 +21,19 @@ public class User
 		}
 	}
 	
+    private static String bytesToHex(byte[] bytes) 
+    {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes)
+            sb.append(String.format("%02x", b));
+        return sb.toString();
+    }
+    
 	public static String md5pass(String clearpass)
 	{
 		try
 		{
-			return new String(md.digest(clearpass.getBytes("UTF-8")));
+			return bytesToHex(md.digest(clearpass.getBytes("UTF-8")));
 		} catch (UnsupportedEncodingException e)
 		{
 			return clearpass;

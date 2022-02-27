@@ -18,13 +18,14 @@ import jakarta.ws.rs.core.Response.Status;
 
 // POJO, no interface no extends
 
-@Path("/checkUsers")
-public class CheckUserEndpoint
+@Path("/checkLogin")
+public class CheckLoginEndpoint
 {
     private AppLogicImpl impl = AppLogicImpl.getInstance();
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response checkUser(UserDTO uo)
     {
     	Optional<UserDTO> u = impl.checkLogin(uo);
