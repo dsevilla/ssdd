@@ -21,6 +21,17 @@ public class User
 		}
 	}
 	
+	public static String md5pass(String clearpass)
+	{
+		try
+		{
+			return new String(md.digest(clearpass.getBytes("UTF-8")));
+		} catch (UnsupportedEncodingException e)
+		{
+			return clearpass;
+		}
+	}
+	
 	private String id;
 	private String email;
 	private String password_hash;
@@ -129,13 +140,7 @@ public class User
 	public User(String email, String password_hash, String name, String tOKEN, int visits)
 	{
 		this(email,email,password_hash, name, tOKEN, visits);
-		try
-		{ 
-			this.id = new String(md.digest(email.getBytes("UTF-8")));
-		} catch (UnsupportedEncodingException e)
-		{
-			this.id = email;
-		}
+		this.id = md5pass(email);
 	}
 
 	public User(String id, String email, String password_hash, String name, String tOKEN, int visits)

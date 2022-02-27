@@ -14,34 +14,24 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 // POJO, no interface no extends
 
-@Path("/users")
-public class UsersEndpoint
+@Path("/checkUsers")
+public class CheckUserEndpoint
 {
     private AppLogicImpl impl = AppLogicImpl.getInstance();
 
-//    @GET
-//    @Path("/a")
-//    public String getA()
-//    {
-//    	return "A";
-//    }
-//    
-//    @GET
-//    @Path("/test")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response getTest()
-//    {
-//    	return Response.ok(new UserDTO("a", "b", "c", "d", "e", 0)).build();
-//    }
-    
-    @GET
-    @Path("/{username}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public UserDTO getUserInfo(@PathParam("username") String username)
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response checkUser(UserDTO uo)
     {
-    	return UserDTOUtils.toDTO(impl.getUserByEmail(username).orElse(null));    	
+    	Optional<UserDTO> u = impl.checkLogin(uo);
+    	if (u.isPresent())
+    		return Response.ok(u.get()).build();
+    	else
+    		return Response.status(Status.FORBIDDEN).build();
     }
+    
 }

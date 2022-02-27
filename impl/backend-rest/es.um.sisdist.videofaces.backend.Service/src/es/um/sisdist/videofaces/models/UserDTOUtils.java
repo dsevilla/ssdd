@@ -26,7 +26,7 @@ public class UserDTOUtils
 	{
 		return new UserDTO(u.getId(),
 				u.getEmail(),
-				u.getPassword_hash(),
+				"", // Password never is returned back
 				u.getName(),
 				u.getTOKEN(),
 				u.getVisits()
