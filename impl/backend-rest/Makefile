@@ -1,6 +1,9 @@
 backend-rest:
 	(cd es.um.sisdist.videofaces.backend.Service \
-		&& mvn clean package \
+		&& mvn clean package)
+
+containers:
+	(cd es.um.sisdist.videofaces.backend.Service \
 		&& docker build -t dsevilla/videofaces-backend-rest:1.0 .)
 
 clean:

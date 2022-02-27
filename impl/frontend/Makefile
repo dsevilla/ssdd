@@ -1,5 +1,7 @@
 frontend:
+
+containers:
 	docker build -t dsevilla/videofaces-frontend:1.0 .
 
 clean:
-	echo "frotend cleans nothing."
+	docker rmi -f dsevilla/videofaces-frontend:1.0

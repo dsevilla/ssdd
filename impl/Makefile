@@ -1,9 +1,15 @@
 #! /usr/bin/env make -f
 SUBDIRS = frontend backend backend-grpc backend-rest
 
-all: make-containers
+all: $(SUBDIRS)
 
-make-containers: $(SUBDIRS)
+run-devel:
+	docker-compose -f docker-compose-devel.yml up
+
+containers: $(SUBDIRS)
+	for i in $(SUBDIRS); do \
+		$(MAKE) -C $$i $@; \
+	done
 
 frontend:
 	$(MAKE) -C $@
@@ -22,4 +28,4 @@ clean:
 		$(MAKE) -C $$i $@; \
 	done
 
-.PHONY: all make-containers frontend backend backend-grpc backend-rest clean
+.PHONY: all run-devel containers frontend backend backend-grpc backend-rest clean
