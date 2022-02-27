@@ -35,6 +35,7 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
@@ -50,7 +51,10 @@ public class GrpcServiceServer
 
   private void start() throws IOException
   {
-    server = ServerBuilder.forPort(port)
+	Optional<String> grpcServerPort = 
+			Optional.ofNullable(System.getenv("GRPC_SERVER_PORT"));
+    server = ServerBuilder.forPort(
+    			grpcServerPort.isPresent() ? Integer.parseInt(grpcServerPort.get()) : port)
         .addService(new GrpcServiceImpl(logger))
         .build()
         .start();

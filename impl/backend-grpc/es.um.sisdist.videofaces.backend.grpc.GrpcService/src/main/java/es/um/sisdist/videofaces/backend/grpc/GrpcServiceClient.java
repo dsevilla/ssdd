@@ -49,13 +49,14 @@ import com.google.protobuf.Empty;
  */
 public class GrpcServiceClient 
 {
+	/*
   private static final Logger logger = Logger.getLogger(GrpcServiceClient.class.getName());
 
   private final ManagedChannel channel;
   private final GrpcServiceGrpc.GrpcServiceBlockingStub blockingStub;
   private final GrpcServiceGrpc.GrpcServiceStub asyncStub;
   
-  /** Construct client connecting to HelloWorld server at {@code host:port}. */
+  // Construct client connecting to HelloWorld server at {@code host:port}. 
   public GrpcServiceClient(String host, int port) 
   {
     channel = ManagedChannelBuilder.forAddress(host, port)
@@ -71,7 +72,7 @@ public class GrpcServiceClient
     channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
   }
   
-  /** Send images. */
+  // Send images. 
   public void sendImagesAndGetCollage()
   {
 	  // Imágenes para enviar
@@ -130,18 +131,17 @@ public class GrpcServiceClient
 
   }
 
-  /**
-   * Collage client
-   */
+  // * Collage client
   public static void main(String[] args) throws Exception {
     GrpcServiceClient client = 
       new GrpcServiceClient(args.length == 0 ? "localhost" : args[0],
                         50051);
     try {
-      /* Access a service running on the local machine on port 50051 */
+      // Access a service running on the local machine on port 50051 
       client.sendImagesAndGetCollage();
     } finally {
       client.shutdown();
     }
   }
+  */
 }

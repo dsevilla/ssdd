@@ -3,3 +3,5 @@ backend-rest:
 		&& mvn clean package \
 		&& docker build -t dsevilla/videofaces-backend-rest:1.0 .)
 
+clean:
+	docker rmi -f dsevilla/videofaces-backend-rest:1.0

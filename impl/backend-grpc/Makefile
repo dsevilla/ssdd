@@ -5,3 +5,5 @@ backend-grpc:
 	      	&& mvn clean package -s mvn-settings.xml \
 	      	&& docker build -t dsevilla/videofaces-backend-grpc:1.0 .)
 
+clean:
+	docker rmi -f dsevilla/videofaces-backend-grpc:1.0 

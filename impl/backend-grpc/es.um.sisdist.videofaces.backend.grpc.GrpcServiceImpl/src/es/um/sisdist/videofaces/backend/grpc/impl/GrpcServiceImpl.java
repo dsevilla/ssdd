@@ -7,22 +7,38 @@ import java.util.logging.Logger;
 import com.google.protobuf.Empty;
 
 import es.um.sisdist.videofaces.backend.grpc.GrpcServiceGrpc;
-import es.um.sisdist.videofaces.backend.grpc.ImageData;
-import es.um.sisdist.videofaces.backend.grpc.ImageSpec;
+import es.um.sisdist.videofaces.backend.grpc.VideoAndChunkData;
+import es.um.sisdist.videofaces.backend.grpc.VideoAvailability;
+import es.um.sisdist.videofaces.backend.grpc.VideoAvailabilityOrBuilder;
+import es.um.sisdist.videofaces.backend.grpc.VideoSpec;
 import io.grpc.stub.StreamObserver;
 
 class GrpcServiceImpl extends GrpcServiceGrpc.GrpcServiceImplBase 
 {
-	private Map<String, ImageData> imageMap;
 	private Logger logger;
 	
     public GrpcServiceImpl(Logger logger) 
     {
 		super();
-		imageMap = new HashMap<>();
 		this.logger = logger;
 	}
 
+    
+	@Override
+	public StreamObserver<VideoAndChunkData> processVideo(StreamObserver<Empty> responseObserver)
+	{
+		// TODO Auto-generated method stub
+		return super.processVideo(responseObserver);
+	}
+
+	@Override
+	public void isVideoReady(VideoSpec request, StreamObserver<VideoAvailability> responseObserver)
+	{
+		responseObserver.onNext(VideoAvailability.newBuilder().setAvailable(true).build());
+		responseObserver.onCompleted();
+	}
+
+/*
 	@Override
 	public void storeImage(ImageData request, StreamObserver<Empty> responseObserver)
     {
@@ -69,4 +85,5 @@ class GrpcServiceImpl extends GrpcServiceGrpc.GrpcServiceImplBase
 		// TODO Auto-generated method stub
 		return super.obtainCollage(responseObserver);
 	}
-  }
+	*/
+}

@@ -9,19 +9,25 @@ package es.um.sisdist.videofaces.backend.grpc;
 
 service GrpcService
 {
-  rpc StoreImage(ImageData) returns (google.protobuf.Empty);
-  rpc StoreImages(stream ImageData) returns (google.protobuf.Empty);
-  rpc ObtainImage (ImageSpec) returns (ImageData);
-  rpc ObtainCollage (stream ImageSpec) returns (ImageData);
+    rpc ProcessVideo(stream VideoAndChunkData) returns (google.protobuf.Empty);
+    rpc IsVideoReady(VideoSpec) returns (VideoAvailability);
 }
 
-message ImageData
+// Se envían trozos de vídeo, ya que puede ser muy grande
+message VideoAndChunkData
 {
-	string id = 1;
-	bytes data = 2; 
+    oneof VideoInfo {
+        string videoid = 1;
+    	bytes data = 2;
+    }
 }
 
-message ImageSpec
+message VideoSpec
 {
 	string id = 1;
+}
+
+message VideoAvailability
+{
+    bool available = 1;
 }
