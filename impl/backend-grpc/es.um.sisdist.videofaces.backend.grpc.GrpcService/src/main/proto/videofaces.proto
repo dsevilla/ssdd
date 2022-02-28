@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+option java_package = "es.um.sisdist.videofaces.backend.grpc";
+
+package es.um.sisdist.videofaces.backend.grpc;
+
+service GrpcService
+{
+    rpc ProcessVideo(stream VideoAndChunkData) returns (google.protobuf.Empty);
+    rpc IsVideoReady(VideoSpec) returns (VideoAvailability);
+}
+
+// Se envían trozos de vídeo, ya que puede ser muy grande
+message VideoAndChunkData
+{
+    oneof VideoInfo {
+        string videoid = 1;
+    	bytes data = 2;
+    }
+}
+
+message VideoSpec
+{
+	string id = 1;
+}
+
+message VideoAvailability
+{
+    bool available = 1;
+}
