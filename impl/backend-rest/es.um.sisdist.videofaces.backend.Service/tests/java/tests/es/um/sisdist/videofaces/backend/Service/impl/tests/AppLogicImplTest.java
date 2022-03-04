@@ -3,6 +3,16 @@
  */
 package es.um.sisdist.videofaces.backend.Service.impl.tests;
 
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import es.um.sisdist.videofaces.backend.Service.impl.AppLogicImpl;
+import es.um.sisdist.videofaces.backend.dao.models.User;
+
 /**
  * @author dsevilla
  *
