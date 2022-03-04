@@ -1,6 +1,6 @@
 backend-rest:
 	(cd es.um.sisdist.videofaces.backend.Service \
-		&& mvn clean package)
+		&& mvn -DskipTests clean package)
 
 containers:
 	(cd es.um.sisdist.videofaces.backend.Service \
