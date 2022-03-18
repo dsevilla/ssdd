@@ -9,6 +9,7 @@ services:
       - FLASK_APP=app/app.py
       - FLASK_ENV=development
       - SQL_SERVER=videofaces-mysql
+      - REST_SERVER=backend-rest
       - GRPC_SERVER=videofaces-grpc
       - GRPC_SERVER_PORT=50051
 
