@@ -1,4 +1,19 @@
-use videofaces;
+db.users.createIndex(
+	{
+		"email": 1
+	},
+	{
+		unique: true
+	})
+
+db.users.createIndex(
+	{
+		"id": 1
+	},
+	{
+		unique: true
+	})
+
 
 db.users.insertOne({id: "ddd", 
 	email: "dsevilla@um.es",
@@ -6,4 +21,3 @@ db.users.insertOne({id: "ddd",
 	name: "diego",
 	token: "TOKEN",
 	visits: 0});
-"
