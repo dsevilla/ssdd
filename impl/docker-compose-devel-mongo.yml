@@ -1,34 +1,35 @@
-version: '2'
+version: '3.1'
 services:
 
   videofaces-frontend:
     build: frontend/.
     ports:
       - 5000:5000
-    env_file: sql.env
+    env_file: mongo.env
     environment:
       - FLASK_APP=app/app.py
       - FLASK_ENV=development
 
-
-  videofaces-mysql:
-    build: videofaces-mysql/.
+  videofaces-mongo:
+    build: videofaces-mongo/.
+    restart: always
     ports:
-      - 3306
-    env_file: sql.env
+      - 27017 
+    env_file: mongo.env
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=videofaces
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=videofaces
 
   backend-rest:
     build: backend-rest/es.um.sisdist.videofaces.backend.Service/.
     ports:
       - 8080:8080
-    env_file: sql.env
+    env_file: mongo.env
 
   videofaces-grpc:
     build: backend-grpc/es.um.sisdist.videofaces.backend.grpc.GrpcServiceImpl/.
     ports:
       - 50051
-    env_file: sql.env
+    env_file: mongo.env
 
