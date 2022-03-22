@@ -1,9 +1,10 @@
 /**
- * 
+ *
  */
 package es.um.sisdist.videofaces.backend.dao;
 
 import es.um.sisdist.videofaces.backend.dao.user.IUserDAO;
+import es.um.sisdist.videofaces.backend.dao.user.MongoUserDAO;
 import es.um.sisdist.videofaces.backend.dao.user.SQLUserDAO;
 
 /**
@@ -12,10 +13,15 @@ import es.um.sisdist.videofaces.backend.dao.user.SQLUserDAO;
  */
 public class DAOFactoryImpl implements IDAOFactory
 {
-	@Override
-	public IUserDAO createSQLUserDAO()
-	{
-		return new SQLUserDAO();
-	}
+    @Override
+    public IUserDAO createSQLUserDAO()
+    {
+        return new SQLUserDAO();
+    }
 
+    @Override
+    public IUserDAO createMongoUserDAO()
+    {
+        return new MongoUserDAO();
+    }
 }

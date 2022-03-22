@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import es.um.sisdist.videofaces.backend.dao.DAOFactoryImpl;
 import es.um.sisdist.videofaces.backend.dao.IDAOFactory;
 import es.um.sisdist.videofaces.backend.dao.models.User;
+import es.um.sisdist.videofaces.backend.dao.models.utils.UserUtils;
 import es.um.sisdist.videofaces.backend.dao.user.IUserDAO;
 import es.um.sisdist.videofaces.backend.grpc.GrpcServiceGrpc;
 import es.um.sisdist.videofaces.backend.grpc.VideoAvailability;
@@ -36,7 +37,11 @@ public class AppLogicImpl
     private AppLogicImpl()
     {
         daoFactory = new DAOFactoryImpl();
-        dao = daoFactory.createSQLUserDAO();
+
+        // if (System.getenv("DB_BACKEND").equals("mongo"))
+        dao = daoFactory.createMongoUserDAO();
+        // else
+        // dao = daoFactory.createSQLUserDAO();
 
         Optional<String> grpcServerName = Optional.ofNullable(System.getenv("GRPC_SERVER"));
         Optional<String> grpcServerPort = Optional.ofNullable(System.getenv("GRPC_SERVER_PORT"));
@@ -84,7 +89,7 @@ public class AppLogicImpl
 
         if (u.isPresent())
         {
-            String hashed_pass = User.md5pass(pass);
+            String hashed_pass = UserUtils.md5pass(pass);
             if (0 == hashed_pass.compareTo(u.get().getPassword_hash()))
                 return u;
         }
