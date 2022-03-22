@@ -13,7 +13,7 @@ public class UserDTOUtils
 {
     public static User fromDTO(UserDTO udto)
     {
-        return new User(udto.getId(), udto.getEmail(), udto.getPassword(), udto.getName(), udto.getTOKEN(),
+        return new User(udto.getId(), udto.getEmail(), udto.getPassword(), udto.getName(), udto.getToken(),
                 udto.getVisits());
     }
 
