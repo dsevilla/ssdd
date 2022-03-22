@@ -20,6 +20,6 @@ public class UserDTOUtils
     public static UserDTO toDTO(User u)
     {
         return new UserDTO(u.getUid(), u.getEmail(), "", // Password never is returned back
-                u.getName(), u.getTOKEN(), u.getVisits());
+                u.getName(), u.getToken(), u.getVisits());
     }
 }
