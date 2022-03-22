@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users(
        	email varchar(50),
 	password_hash text,
        	name text,
-	TOKEN text,
+	token text,
 	visits int,
 	PRIMARY KEY(id)
 );
