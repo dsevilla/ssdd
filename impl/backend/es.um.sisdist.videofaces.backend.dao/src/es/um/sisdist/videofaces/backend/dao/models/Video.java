@@ -5,7 +5,7 @@ package es.um.sisdist.videofaces.backend.dao.models;
 
 public class Video
 {
-    private String id;
+    private String vid;
     private String userid;
 
     public enum PROCESS_STATUS
@@ -23,93 +23,93 @@ public class Video
     {
     }
 
-	public Video(String id, String userid, PROCESS_STATUS pstatus, String date, String filename)
-	{
-		super();
-		this.id = id;
-		this.userid = userid;
-		this.pstatus = pstatus;
-		this.date = date;
-		this.filename = filename;
-	}
+    public Video(String id, String userid, PROCESS_STATUS pstatus, String date, String filename)
+    {
+        super();
+        this.vid = id;
+        this.userid = userid;
+        this.pstatus = pstatus;
+        this.date = date;
+        this.filename = filename;
+    }
 
-	/**
-	 * @return the id
-	 */
-	public String getId()
-	{
-		return id;
-	}
+    /**
+     * @return the id
+     */
+    public String getVid()
+    {
+        return vid;
+    }
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(String id)
-	{
-		this.id = id;
-	}
+    /**
+     * @param id the id to set
+     */
+    public void setVid(String id)
+    {
+        this.vid = id;
+    }
 
-	/**
-	 * @return the userid
-	 */
-	public String getUserid()
-	{
-		return userid;
-	}
+    /**
+     * @return the userid
+     */
+    public String getUserid()
+    {
+        return userid;
+    }
 
-	/**
-	 * @param userid the userid to set
-	 */
-	public void setUserid(String userid)
-	{
-		this.userid = userid;
-	}
+    /**
+     * @param userid the userid to set
+     */
+    public void setUserid(String userid)
+    {
+        this.userid = userid;
+    }
 
-	/**
-	 * @return the pstatus
-	 */
-	public PROCESS_STATUS getPstatus()
-	{
-		return pstatus;
-	}
+    /**
+     * @return the pstatus
+     */
+    public PROCESS_STATUS getPstatus()
+    {
+        return pstatus;
+    }
 
-	/**
-	 * @param pstatus the pstatus to set
-	 */
-	public void setPstatus(PROCESS_STATUS pstatus)
-	{
-		this.pstatus = pstatus;
-	}
+    /**
+     * @param pstatus the pstatus to set
+     */
+    public void setPstatus(PROCESS_STATUS pstatus)
+    {
+        this.pstatus = pstatus;
+    }
 
-	/**
-	 * @return the date
-	 */
-	public String getDate()
-	{
-		return date;
-	}
+    /**
+     * @return the date
+     */
+    public String getDate()
+    {
+        return date;
+    }
 
-	/**
-	 * @param date the date to set
-	 */
-	public void setDate(String date)
-	{
-		this.date = date;
-	}
+    /**
+     * @param date the date to set
+     */
+    public void setDate(String date)
+    {
+        this.date = date;
+    }
 
-	/**
-	 * @return the filename
-	 */
-	public String getFilename()
-	{
-		return filename;
-	}
+    /**
+     * @return the filename
+     */
+    public String getFilename()
+    {
+        return filename;
+    }
 
-	/**
-	 * @param filename the filename to set
-	 */
-	public void setFilename(String filename)
-	{
-		this.filename = filename;
-	}
+    /**
+     * @param filename the filename to set
+     */
+    public void setFilename(String filename)
+    {
+        this.filename = filename;
+    }
 }
