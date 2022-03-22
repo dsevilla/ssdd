@@ -38,10 +38,10 @@ public class AppLogicImpl
     {
         daoFactory = new DAOFactoryImpl();
 
-        // if (System.getenv("DB_BACKEND").equals("mongo"))
-        dao = daoFactory.createMongoUserDAO();
-        // else
-        // dao = daoFactory.createSQLUserDAO();
+        if (System.getenv("DB_BACKEND").equals("mongo"))
+            dao = daoFactory.createMongoUserDAO();
+        else
+            dao = daoFactory.createSQLUserDAO();
 
         Optional<String> grpcServerName = Optional.ofNullable(System.getenv("GRPC_SERVER"));
         Optional<String> grpcServerPort = Optional.ofNullable(System.getenv("GRPC_SERVER_PORT"));
