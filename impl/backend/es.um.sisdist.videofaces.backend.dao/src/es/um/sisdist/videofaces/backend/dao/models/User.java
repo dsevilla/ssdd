@@ -12,7 +12,7 @@ public class User
     private String password_hash;
     private String name;
 
-    private String TOKEN;
+    private String token;
 
     private int visits;
 
@@ -83,17 +83,17 @@ public class User
     /**
      * @return the TOKEN
      */
-    public String getTOKEN()
+    public String getToken()
     {
-        return TOKEN;
+        return token;
     }
 
     /**
      * @param tOKEN the tOKEN to set
      */
-    public void setTOKEN(final String TOKEN)
+    public void setToken(final String TOKEN)
     {
-        this.TOKEN = TOKEN;
+        this.token = TOKEN;
     }
 
     /**
@@ -124,7 +124,7 @@ public class User
         this.email = email;
         this.password_hash = password_hash;
         this.name = name;
-        TOKEN = tOKEN;
+        token = tOKEN;
         this.visits = visits;
     }
 
@@ -132,7 +132,7 @@ public class User
     public String toString()
     {
         return "User [uid=" + uid + ", email=" + email + ", password_hash=" + password_hash + ", name=" + name
-                + ", TOKEN=" + TOKEN + ", visits=" + visits + "]";
+                + ", TOKEN=" + token + ", visits=" + visits + "]";
     }
 
     public User()
