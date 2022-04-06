@@ -14,4 +14,4 @@ ENV FLASK_ENV="development"
 
 EXPOSE 5000
 
-ENTRYPOINT [ "flask", "run", "--host=0.0.0.0" ]
+CMD [ "flask", "run", "--host=0.0.0.0" ]
