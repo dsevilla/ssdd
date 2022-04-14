@@ -14,8 +14,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-// POJO, no interface no extends
-
 @Path("/uploadVideo")
 public class UploadVideoEndpoint
 {
