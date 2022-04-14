@@ -31,4 +31,3 @@ services:
     ports:
       - 50051
     env_file: sql.env
-

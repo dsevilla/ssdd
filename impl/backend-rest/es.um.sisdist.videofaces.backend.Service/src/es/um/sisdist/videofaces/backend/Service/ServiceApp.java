@@ -18,5 +18,4 @@ public class ServiceApp extends Application
         props.put("jersey.config.server.provider.classnames", "org.glassfish.jersey.media.multipart.MultiPartFeature");
         return props;
     }
-
 }
