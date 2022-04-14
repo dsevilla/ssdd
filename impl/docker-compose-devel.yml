@@ -14,7 +14,7 @@ services:
   videofaces-mysql:
     build: videofaces-mysql/.
     ports:
-      - 3306
+      - 3306:3306
     env_file: sql.env
     environment:
       - MYSQL_ROOT_PASSWORD=root
