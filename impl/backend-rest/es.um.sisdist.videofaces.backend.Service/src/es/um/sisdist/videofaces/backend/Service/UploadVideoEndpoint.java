@@ -7,6 +7,7 @@ import java.nio.file.StandardCopyOption;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import es.um.sisdist.videofaces.backend.Service.impl.AppLogicImpl;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -17,7 +18,7 @@ import jakarta.ws.rs.core.Response;
 @Path("/uploadVideo")
 public class UploadVideoEndpoint
 {
-    // private AppLogicImpl impl = AppLogicImpl.getInstance();
+    private AppLogicImpl impl = AppLogicImpl.getInstance();
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)

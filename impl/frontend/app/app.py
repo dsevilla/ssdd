@@ -1,11 +1,16 @@
 from flask import Flask, render_template, send_from_directory, url_for, request, redirect
 from flask_login import LoginManager, login_manager, current_user, login_user, login_required, logout_user
+import requests
+import os
 
 # Usuarios
 from models import users, User
 
 # Login
 from forms import LoginForm
+
+# Send Video
+from forms import SendVideoForm
 
 app = Flask(__name__, static_url_path='')
 login_manager = LoginManager()
@@ -19,6 +24,11 @@ app.config['SECRET_KEY'] = 'qH1vprMjavek52cv7Lmfe1FoCexrrV8egFnB21jHhkuOHm8hJUe1
 @app.route('/static/<path:path>')
 def serve_static(path):
     return send_from_directory('static', path)
+
+# Icon!
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('static', 'favicon.ico')
 
 @app.route('/')
 def index():
@@ -42,6 +52,27 @@ def login():
                 return redirect(url_for('index'))
 
         return render_template('login.html', form=form,  error=error)
+
+@app.route('/send_video', methods=['GET', 'POST'])
+@login_required
+def send_video():
+    error = None
+    form = SendVideoForm()
+    if request.method == "POST" and form.validate():
+        # A video is being sent
+        files = {'file': (form.file.data.filename, # filename
+                          form.file.data)} # file stream to resend
+        # print(requests.Request('POST', 'http://localhost:8080/rest/uploadVideo',
+        #                        files=files).prepare().body.decode('utf-8'))
+        REST_SERVER = os.environ.get('REST_SERVER', 'localhost')
+        response = requests.post('http://'+REST_SERVER+':8080/Service/uploadVideo',
+                                 files=files)
+        if response.status_code == 200:
+            error = "Video uploaded successfully"
+        else:
+            error = response.text
+
+    return render_template('send_video.html', form=form, error=error)
 
 
 @app.route('/profile')

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block custom_style %}
+ <!-- Custom styles for this template -->
+{% endblock %}
+
+{% block content %}
+<main class="w-100 p-3">
+
+<form method="POST" enctype="multipart/form-data"
+      class="form-horizontal form-bordered">
+    {{ form.hidden_tag() }}
+
+  <div class="form-group">
+    <h1 class="h3 mb-3 fw-normal">Choose Video to Upload</h1>
+    <label for="exampleInputFile">Vídeo: </label>
+    {{form.file}}
+    <p class="help-block">Video to upload, formats allowed: ....</p>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+</form>
+  {% if error %}
+     <p class="error"><strong>Error:</strong> {{ error }}
+  {% endif %}
+</main>
+{% endblock %}

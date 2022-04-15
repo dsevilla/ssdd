@@ -2,11 +2,13 @@ version: '2'
 services:
 
   flask-example:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile-devel
     ports:
       - "5000:5000"
     volumes:
-      - .:/flask-example
+      - .:/videofaces-frontend
     user: root
     stdin_open: true # docker run -i
     tty: true        # docker run -t
