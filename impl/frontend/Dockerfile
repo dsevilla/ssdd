@@ -2,7 +2,6 @@ FROM python:3.7-slim
 
 MAINTAINER Your Name "youremail@domain.tld"
 
-# We copy just the requirements.txt first to leverage Docker cache
 COPY . /videofaces-frontend
 
 WORKDIR /videofaces-frontend
