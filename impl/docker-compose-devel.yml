@@ -12,6 +12,7 @@ services:
 
 
   videofaces-mysql:
+    command: --max_allowed_packet=1024M
     build: videofaces-mysql/.
     ports:
       - 3306:3306
