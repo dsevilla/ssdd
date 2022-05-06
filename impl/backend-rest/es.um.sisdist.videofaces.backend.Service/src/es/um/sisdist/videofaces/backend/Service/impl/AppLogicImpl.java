@@ -43,8 +43,8 @@ public class AppLogicImpl
         else
             dao = daoFactory.createSQLUserDAO();
 
-        Optional<String> grpcServerName = Optional.ofNullable(System.getenv("GRPC_SERVER"));
-        Optional<String> grpcServerPort = Optional.ofNullable(System.getenv("GRPC_SERVER_PORT"));
+        var grpcServerName = Optional.ofNullable(System.getenv("GRPC_SERVER"));
+        var grpcServerPort = Optional.ofNullable(System.getenv("GRPC_SERVER_PORT"));
 
         channel = ManagedChannelBuilder
                 .forAddress(grpcServerName.orElse("localhost"), Integer.parseInt(grpcServerPort.orElse("50051")))
@@ -72,10 +72,11 @@ public class AppLogicImpl
         return dao.getUserById(userId);
     }
 
-    public boolean isVideoReady(String videoId)
+    public boolean isVideoReady(String userId, String videoId)
     {
         // Test de grpc, puede hacerse con la BD
-        VideoAvailability available = blockingStub.isVideoReady(VideoSpec.newBuilder().setId(videoId).build());
+    	var msg = VideoSpec.newBuilder().setUid(userId).setVid(videoId);
+        VideoAvailability available = blockingStub.isVideoReady(msg.build());
         return available.getAvailable();
     }
 
