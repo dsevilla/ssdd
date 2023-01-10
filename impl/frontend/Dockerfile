@@ -1,7 +1,5 @@
 FROM python:3.7-slim
 
-MAINTAINER Your Name "youremail@domain.tld"
-
 COPY . /videofaces-frontend
 
 WORKDIR /videofaces-frontend
