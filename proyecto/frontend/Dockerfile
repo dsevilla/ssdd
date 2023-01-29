@@ -7,7 +7,7 @@ WORKDIR /ssdd-frontend
 RUN pip3 install -r requirements.txt
 
 ENV FLASK_APP="app/app.py"
-ENV FLASK_ENV="development"
+ENV FLASK_DEBUG=true
 
 EXPOSE 5000
 
