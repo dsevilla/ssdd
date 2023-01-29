@@ -53,28 +53,6 @@ def login():
 
         return render_template('login.html', form=form,  error=error)
 
-@app.route('/send_video', methods=['GET', 'POST'])
-@login_required
-def send_video():
-    error = None
-    form = SendVideoForm()
-    if request.method == "POST" and form.validate():
-        # A video is being sent
-        files = {'file': (form.file.data.filename, # filename
-                          form.file.data)} # file stream to resend
-        # print(requests.Request('POST', 'http://localhost:8080/rest/uploadVideo',
-        #                        files=files).prepare().body.decode('utf-8'))
-        REST_SERVER = os.environ.get('REST_SERVER', 'localhost')
-        response = requests.post('http://'+REST_SERVER+':8080/Service/uploadVideo',
-                                 files=files)
-        if response.status_code == 200:
-            error = "Video uploaded successfully"
-        else:
-            error = response.text
-
-    return render_template('send_video.html', form=form, error=error)
-
-
 @app.route('/profile')
 @login_required
 def profile():

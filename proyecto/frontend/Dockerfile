@@ -1,8 +1,8 @@
-FROM python:3.7-slim
+FROM python:3.10-slim
 
-COPY . /videofaces-frontend
+COPY . /ssdd-frontend
 
-WORKDIR /videofaces-frontend
+WORKDIR /ssdd-frontend
 
 RUN pip3 install -r requirements.txt
 

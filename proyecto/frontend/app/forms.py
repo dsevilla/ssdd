@@ -7,5 +7,3 @@ class LoginForm(FlaskForm):
     password = PasswordField('password', validators=[DataRequired()])
     remember_me = BooleanField('Recuérdame')
 
-class SendVideoForm(FlaskForm):
-    file = FileField('file', validators=[DataRequired()])
