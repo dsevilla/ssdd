@@ -1,0 +1,11 @@
+version: '2'
+services:
+
+  maven:
+    image: maven:3-openjdk-11
+    volumes:
+      - .:/root/maven
+    user: root
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    command: /bin/bash
