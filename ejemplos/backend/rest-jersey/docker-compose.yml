@@ -1,0 +1,8 @@
+version: '2'
+services:
+
+  backend-rest:
+    build: .
+    ports:
+      - 8080:8080
+
