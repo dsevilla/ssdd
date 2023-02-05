@@ -9,9 +9,6 @@ from models import users, User
 # Login
 from forms import LoginForm
 
-# Send Video
-from forms import SendVideoForm
-
 app = Flask(__name__, static_url_path='')
 login_manager = LoginManager()
 login_manager.init_app(app) # Para mantener la sesión

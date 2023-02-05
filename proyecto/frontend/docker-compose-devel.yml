@@ -14,5 +14,5 @@ services:
     tty: true        # docker run -t
     environment:
       - FLASK_APP=app/app.py
-      - FLASK_ENV=development
+      - FLASK_DEBUG=false
 

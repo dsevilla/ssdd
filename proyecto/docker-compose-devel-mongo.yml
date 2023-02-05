@@ -1,7 +1,7 @@
 version: '3.1'
 services:
 
-  videofaces-frontend:
+  ssdd-frontend:
     build: frontend/.
     ports:
       - 5000:5000
