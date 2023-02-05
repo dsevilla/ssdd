@@ -1,5 +1,5 @@
 backend:
-	(cd es.um.sisdist.videofaces.backend.dao \
+	(cd es.um.sisdist.backend.dao \
 		&& mvn clean install)
 
 containers:

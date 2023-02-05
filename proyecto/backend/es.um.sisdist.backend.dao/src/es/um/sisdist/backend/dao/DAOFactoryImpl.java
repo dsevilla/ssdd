@@ -1,11 +1,11 @@
 /**
  *
  */
-package es.um.sisdist.videofaces.backend.dao;
+package es.um.sisdist.backend.dao;
 
-import es.um.sisdist.videofaces.backend.dao.user.IUserDAO;
-import es.um.sisdist.videofaces.backend.dao.user.MongoUserDAO;
-import es.um.sisdist.videofaces.backend.dao.user.SQLUserDAO;
+import es.um.sisdist.backend.dao.user.IUserDAO;
+import es.um.sisdist.backend.dao.user.MongoUserDAO;
+import es.um.sisdist.backend.dao.user.SQLUserDAO;
 
 /**
  * @author dsevilla

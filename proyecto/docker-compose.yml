@@ -1,34 +1,33 @@
 version: '2'
 services:
 
-  videofaces-frontend:
-    image: dsevilla/videofaces-frontend:1.0
+  ssdd-frontend:
+    image: dsevilla/ssdd-frontend:1.0
     ports:
       - 5000:5000
     env_file: sql.env
     environment:
       - FLASK_APP=app/app.py
-      - FLASK_ENV=development
+      - FLASK_DEBUG=true
 
 
-  videofaces-mysql:
-    command: --max_allowed_packet=1024M
-    build: videofaces-mysql/.
+  db-mysql:
+    build: db-mysql/.
     ports:
       - 3306
     env_file: sql.env
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=videofaces
+      - MYSQL_DATABASE=ssdd
 
   backend-rest:
-    image: dsevilla/videofaces-backend-rest:1.0
+    image: dsevilla/backend-rest:1.0
     ports:
       - 8080:8080
     env_file: sql.env
 
-  videofaces-grpc:
-    image: dsevilla/videofaces-backend-grpc:1.0
+  backend-grpc:
+    image: dsevilla/backend-grpc:1.0
     ports:
       - 50051
     env_file: sql.env

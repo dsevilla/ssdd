@@ -1,7 +1,7 @@
 /**
  *
  */
-package es.um.sisdist.videofaces.backend.dao.user;
+package es.um.sisdist.backend.dao.user;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import es.um.sisdist.videofaces.backend.dao.models.User;
+import es.um.sisdist.backend.dao.models.User;
 
 /**
  * @author dsevilla

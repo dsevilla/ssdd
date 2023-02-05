@@ -1,5 +1,5 @@
-CREATE SCHEMA IF NOT EXISTS proyecto;
-USE proyecto;
+CREATE SCHEMA IF NOT EXISTS ssdd;
+USE ssdd;
 
 CREATE TABLE IF NOT EXISTS users(
 	id varchar(50),

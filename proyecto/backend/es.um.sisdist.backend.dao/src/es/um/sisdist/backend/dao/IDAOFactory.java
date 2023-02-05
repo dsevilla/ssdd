@@ -1,9 +1,9 @@
 /**
  *
  */
-package es.um.sisdist.videofaces.backend.dao;
+package es.um.sisdist.backend.dao;
 
-import es.um.sisdist.videofaces.backend.dao.user.IUserDAO;
+import es.um.sisdist.backend.dao.user.IUserDAO;
 
 /**
  * @author dsevilla

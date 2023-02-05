@@ -1,7 +1,7 @@
 /**
  *
  */
-package es.um.sisdist.videofaces.backend.dao.user;
+package es.um.sisdist.backend.dao.user;
 
 import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
 import static com.mongodb.client.model.Filters.eq;
@@ -19,7 +19,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import es.um.sisdist.videofaces.backend.dao.models.User;
+import es.um.sisdist.backend.dao.models.User;
 
 /**
  * @author dsevilla

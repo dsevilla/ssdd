@@ -1,9 +1,9 @@
 /**
  *
  */
-package es.um.sisdist.videofaces.backend.dao.models;
+package es.um.sisdist.backend.dao.models;
 
-import es.um.sisdist.videofaces.backend.dao.models.utils.UserUtils;
+import es.um.sisdist.backend.dao.models.utils.UserUtils;
 
 public class User
 {
