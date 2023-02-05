@@ -8,10 +8,10 @@ services:
     env_file: mongo.env
     environment:
       - FLASK_APP=app/app.py
-      - FLASK_ENV=development
+      - FLASK_DEBUG=true
 
-  videofaces-mongo:
-    build: videofaces-mongo/.
+  ssdd-mongo:
+    build: ssdd-mongo/.
     restart: always
     ports:
       - 27017:27017 
@@ -19,7 +19,7 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
-      - MONGO_INITDB_DATABASE=videofaces
+      - MONGO_INITDB_DATABASE=ssdd
 
   backend-rest:
     build: backend-rest/es.um.sisdist.videofaces.backend.Service/.
@@ -27,7 +27,7 @@ services:
       - 8080:8080
     env_file: mongo.env
 
-  videofaces-grpc:
+  backend-grpc:
     build: backend-grpc/es.um.sisdist.videofaces.backend.grpc.GrpcServiceImpl/.
     ports:
       - 50051
