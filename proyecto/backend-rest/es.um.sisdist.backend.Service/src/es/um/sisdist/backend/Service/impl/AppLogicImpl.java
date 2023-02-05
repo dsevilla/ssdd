@@ -6,14 +6,14 @@ package es.um.sisdist.backend.Service.impl;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import es.um.sisdist.videofaces.backend.dao.DAOFactoryImpl;
-import es.um.sisdist.videofaces.backend.dao.IDAOFactory;
-import es.um.sisdist.videofaces.backend.dao.models.User;
-import es.um.sisdist.videofaces.backend.dao.models.utils.UserUtils;
-import es.um.sisdist.videofaces.backend.dao.user.IUserDAO;
-import es.um.sisdist.videofaces.backend.grpc.GrpcServiceGrpc;
-import es.um.sisdist.videofaces.backend.grpc.VideoAvailability;
-import es.um.sisdist.videofaces.backend.grpc.VideoSpec;
+import es.um.sisdist.backend.grpc.GrpcServiceGrpc;
+import es.um.sisdist.backend.grpc.VideoAvailability;
+import es.um.sisdist.backend.grpc.VideoSpec;
+import es.um.sisdist.backend.dao.DAOFactoryImpl;
+import es.um.sisdist.backend.dao.IDAOFactory;
+import es.um.sisdist.backend.dao.models.User;
+import es.um.sisdist.backend.dao.models.utils.UserUtils;
+import es.um.sisdist.backend.dao.user.IUserDAO;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 

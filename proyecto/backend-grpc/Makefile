@@ -1,12 +1,12 @@
 backend-grpc:
-	(cd es.um.sisdist.videofaces.backend.grpc.GrpcService \
+	(cd es.um.sisdist.backend.grpc.GrpcService \
 		&& mvn clean install)
-	(cd es.um.sisdist.videofaces.backend.grpc.GrpcServiceImpl \
-	      	&& mvn clean package -s mvn-settings.xml)
+	(cd es.um.sisdist.backend.grpc.GrpcServiceImpl \
+	      	&& mvn clean package)
 
 containers:
-	(cd es.um.sisdist.videofaces.backend.grpc.GrpcServiceImpl \
-	      	&& docker build -t dsevilla/videofaces-backend-grpc:1.0 .)
+	(cd es.um.sisdist.backend.grpc.GrpcServiceImpl \
+	      	&& docker build -t dsevilla/ssdd-backend-grpc:1.0 .)
 
 clean:
-	docker rmi -f dsevilla/videofaces-backend-grpc:1.0 
+	docker rmi -f dsevilla/ssdd-backend-grpc:1.0 
