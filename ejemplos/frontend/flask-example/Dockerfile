@@ -4,7 +4,7 @@ COPY . /flask-example
 
 WORKDIR /flask-example
 
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
 
 ENV FLASK_APP="app/app.py"
 ENV FLASK_DEBUG=true
