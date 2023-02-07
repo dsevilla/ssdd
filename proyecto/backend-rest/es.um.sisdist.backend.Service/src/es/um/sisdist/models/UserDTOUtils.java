@@ -3,7 +3,7 @@
  */
 package es.um.sisdist.models;
 
-import es.um.sisdist.videofaces.backend.dao.models.User;
+import es.um.sisdist.backend.dao.models.User;
 
 /**
  * @author dsevilla
