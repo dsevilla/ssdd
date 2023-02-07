@@ -2,14 +2,12 @@ FROM python:3.10-slim
 
 RUN mkdir -p /ssdd-frontend
 
-MAINTAINER Your Name "youremail@domain.tld"
-
 # We copy just the requirements.txt first to leverage Docker cache
-COPY requirements.txt /videofaces-frontend
+COPY requirements.txt /ssdd-frontend
 
 WORKDIR /ssdd-frontend
 
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
 
 ENV FLASK_APP="app/app.py"
 ENV FLASK_DEBUG=false
