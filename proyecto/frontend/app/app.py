@@ -22,11 +22,6 @@ app.config['SECRET_KEY'] = 'qH1vprMjavek52cv7Lmfe1FoCexrrV8egFnB21jHhkuOHm8hJUe1
 def serve_static(path):
     return send_from_directory('static', path)
 
-# Icon!
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory('static', 'favicon.ico')
-
 @app.route('/')
 def index():
     return render_template('index.html')
