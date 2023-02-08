@@ -4,6 +4,9 @@
 package es.um.sisdist.backend.grpc.impl.jsexample;
 
 import jscheme.JScheme;
+import jscheme.SchemePair;
+import jscheme.SchemeProcedure;
+import jsint.Procedure;
 
 /**
  * @author dsevilla
@@ -27,7 +30,6 @@ public class JSchemeExample
 					+ ";; tail calls are optimized as required\n"
 					+ "(define answer (countdown 42))\n"
 					);
-
 		System.out.println("Message: '" + js.eval("msg") + "'");
 
 		// Values
@@ -37,5 +39,20 @@ public class JSchemeExample
 		
 		// Function calls
 		System.out.println(js.call("countdown", 42));
+		Procedure p = new Procedure() {
+			
+			private static final long serialVersionUID = 6988405761033921572L;
+
+			@Override
+			public Object apply(Object[] arg0) 
+			{
+				System.out.println("xxxxxxxxxxxxxxxxxxxx");
+				return null;
+			}
+		};
+		js.setGlobalValue("a" , 2);
+		js.setGlobalValue("emit", p);
+
+		js.readEvalPrintLoop();
 	}
 }
