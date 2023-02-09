@@ -36,7 +36,7 @@ public class MongoUserDAO implements IUserDAO
 
         // Replace the uri string with your MongoDB deployment's connection string
         String uri = "mongodb://root:root@" + Optional.ofNullable(System.getenv("MONGO_SERVER")).orElse("localhost")
-                + ":27017/videofaces?authSource=admin";
+                + ":27017/ssdd?authSource=admin";
 
         MongoClient mongoClient = MongoClients.create(uri);
         MongoDatabase database = mongoClient.getDatabase("videofaces").withCodecRegistry(pojoCodecRegistry);

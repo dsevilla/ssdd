@@ -33,7 +33,7 @@ public class SQLUserDAO implements IUserDAO
             // se pueden hacer pruebas locales
             Optional<String> sqlServerName = Optional.ofNullable(System.getenv("SQL_SERVER"));
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://" + sqlServerName.orElse("localhost") + "/videofaces?user=root&password=root");
+                    "jdbc:mysql://" + sqlServerName.orElse("localhost") + "/ssdd?user=root&password=root");
 
         } catch (Exception e)
         {

@@ -4,8 +4,6 @@
 package es.um.sisdist.backend.grpc.impl.jsexample;
 
 import jscheme.JScheme;
-import jscheme.SchemePair;
-import jscheme.SchemeProcedure;
 import jsint.Pair;
 import jsint.Procedure;
 
