@@ -4,7 +4,9 @@
 package es.um.sisdist.backend.grpc.impl.jsexample;
 
 import jscheme.JScheme;
-import jsint.Pair;
+import jscheme.SchemePair;
+
+import static jscheme.JScheme.*; 
 import jsint.Procedure;
 
 /**
@@ -15,8 +17,7 @@ public class JSchemeExample
 {
 	public static void main(String[] args)
 	{
-		JScheme js = null;
-		js = new JScheme();
+		JScheme js = new JScheme();
 		js.load("(define (countdown x)\n"
 					+ "  (define (loop x acc)\n"
 					+ "    (if (= x 0)\n"
@@ -39,7 +40,7 @@ public class JSchemeExample
 		
 		// Function calls
 		System.out.println(js.call("countdown", 42));
-		System.out.println("Length: " + js.call("retlength", JScheme.list(1,2)));
+		System.out.println("Length: " + js.call("retlength", list(1,2)));
 		Procedure p = new Procedure() {
 			
 			private static final long serialVersionUID = 6988405761033921572L;
@@ -47,16 +48,19 @@ public class JSchemeExample
 			@Override
 			public Object apply(Object[] arg0) 
 			{
-				Pair p = (Pair)arg0[0];
-				System.out.println("Key: " + ((Pair)p.getFirst()).getFirst() + ". Value: " +
-						((Pair)((Pair)p.getFirst()).getRest()).getFirst()
-								);
+				SchemePair arg = (SchemePair)((SchemePair)arg0[0]).first();
+				System.out.println("Key: " + arg.first() 
+					+ ". Value: " + arg.second()
+				);
 				return null;
 			}
 		};
+		p.setName("emit");
 		js.setGlobalValue("a" , 2);
 		js.setGlobalValue("emit", p);
 
+		System.out.println("Emit '(1 2): " + js.call("emit", list(1,2)));
+		
 		js.readEvalPrintLoop();
 	}
 }
