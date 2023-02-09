@@ -39,7 +39,7 @@ public class JSchemeExample
 		
 		// Function calls
 		System.out.println(js.call("countdown", 42));
-		System.out.println("Length: " + js.call("retlength", new Pair(1,new Pair(2,null))));
+		System.out.println("Length: " + js.call("retlength", JScheme.list(1,2)));
 		Procedure p = new Procedure() {
 			
 			private static final long serialVersionUID = 6988405761033921572L;
@@ -47,9 +47,6 @@ public class JSchemeExample
 			@Override
 			public Object apply(Object[] arg0) 
 			{
-				System.out.println(arg0.length);
-				if (arg0.length != 1)
-					System.err.println("emit() lleva sólo un parámetro, un par.");
 				Pair p = (Pair)arg0[0];
 				System.out.println("Key: " + ((Pair)p.getFirst()).getFirst() + ". Value: " +
 						((Pair)((Pair)p.getFirst()).getRest()).getFirst()
