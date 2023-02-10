@@ -6,7 +6,11 @@ package es.um.sisdist.backend.grpc.impl.jsexample;
 import jscheme.JScheme;
 import jscheme.SchemePair;
 
-import static jscheme.JScheme.*; 
+import static jscheme.JScheme.*;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 import jsint.Procedure;
 
 /**
@@ -15,7 +19,7 @@ import jsint.Procedure;
  */
 public class JSchemeExample 
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws FileNotFoundException
 	{
 		JScheme js = new JScheme();
 		js.load("(define (countdown x)\n"
@@ -31,6 +35,27 @@ public class JSchemeExample
 					+ ";; tail calls are optimized as required\n"
 					+ "(define answer (countdown 42))\n"
 					);
+		// load useful code
+		js.load("(define (filter f lst)\n"
+				+ "  (define (iter lst result)\n"
+				+ "    (cond\n"
+				+ "      ((null? lst) (reverse result))\n"
+				+ "      ((f (car lst)) (iter (cdr lst)\n"
+				+ "                           (cons (car lst) result)))\n"
+				+ "      (else (iter (cdr lst)\n"
+				+ "                  result))))\n"
+				+ "  (iter lst '()))\n"
+				+ "(define (reduce fn list init)\n"
+				+ "  (if (null? list) init"
+				+ "      (fn (car list)"
+				+ "          (reduce fn (cdr list) init))))"
+				+ "(define (map f L)"
+				+ "  (if (null? L)"
+				+ "    ()\n"
+				+ "  (cons (f (car L))"
+				+ "    (map f (cdr L)))))"
+				);
+
 		System.out.println("Message: '" + js.eval("msg") + "'");
 
 		// Values

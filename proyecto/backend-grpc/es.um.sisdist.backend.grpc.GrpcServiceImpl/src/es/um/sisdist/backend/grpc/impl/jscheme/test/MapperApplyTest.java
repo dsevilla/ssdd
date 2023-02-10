@@ -54,12 +54,10 @@ class MapperApplyTest
 		
 		MapperApply ma = new MapperApply(js, 
 				"(define (ssdd_map p)"
-				+ "(begin"
 				+ " (display (first p))"
 				+ " (display \": \")"
 				+ " (display (second p))"
-				+ " (emit (list (first p) (second p)))"
-				+ "))",
+				+ " (emit (list (first p) (second p))))",
 				p ->  // emit function
 					{
 						System.out.println("Called: "

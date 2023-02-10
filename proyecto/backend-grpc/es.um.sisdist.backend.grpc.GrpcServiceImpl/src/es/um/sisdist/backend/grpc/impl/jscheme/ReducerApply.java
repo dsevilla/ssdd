@@ -16,7 +16,16 @@ public class ReducerApply
 	private void _install_reduce_function()
 	{
 		// load useful code
-		js.load("(define (reduce fn list init)"
+		js.load("(define (filter f lst)\n"
+				+ "  (define (iter lst result)\n"
+				+ "    (cond\n"
+				+ "      ((null? lst) (reverse result))\n"
+				+ "      ((f (car lst)) (iter (cdr lst)\n"
+				+ "                           (cons (car lst) result)))\n"
+				+ "      (else (iter (cdr lst)\n"
+				+ "                  result))))\n"
+				+ "  (iter lst '()))\n"
+				+ "(define (reduce fn list init)\n"
 				+ "  (if (null? list) init"
 				+ "      (fn (car list)"
 				+ "          (reduce fn (cdr list) init))))"
@@ -24,9 +33,8 @@ public class ReducerApply
 				+ "  (if (null? L)"
 				+ "    ()\n"
 				+ "  (cons (f (car L))"
-				+ "    (map f (cdr L)))"
-				+ "  )"
-				+ ")");
+				+ "    (map f (cdr L)))))"
+				);
 		
 		// ssdd_reduce
 		js.load(ssdd_reduce_function);
