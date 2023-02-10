@@ -19,14 +19,13 @@ public class MapperApply
 {
 	private static Void nilfunc(SchemePair t) {return null;};
 	
-	private String scheme_map_function = null;
-	private Function<SchemePair, Void> emit_function = MapperApply::nilfunc;
+	private String ssdd_map_function = null;
+	private Function<SchemePair,Void> emit_function = MapperApply::nilfunc;
 	private JScheme js = null;
 	
-	private void _install_emit_function()
+	private void _install_emit_map_functions()
 	{
-		Procedure p = new Procedure() {
-			
+		var p = new Procedure() {
 			private static final long serialVersionUID = 6988405761033921572L;
 
 			@Override
@@ -41,46 +40,49 @@ public class MapperApply
 		};
 		p.setName("emit");
 		js.setGlobalValue("emit", p);
+		
+		// ssdd_map
+		js.load(ssdd_map_function);
 	}
 	
 	public MapperApply(JScheme js, String scheme_map_function) 
 	{
 		super();
-		this.scheme_map_function = scheme_map_function;
+		this.ssdd_map_function = scheme_map_function;
 		this.js = js;
 
 	}
 	public MapperApply(JScheme js, String scheme_map_function, Function<SchemePair, Void> emit_function)
 	{
 		super();
-		this.scheme_map_function = scheme_map_function;
+		this.ssdd_map_function = scheme_map_function;
 		this.emit_function = emit_function;
 		this.js = js;
-		_install_emit_function();
+		_install_emit_map_functions();
 	}
 
-	public void apply_map_function(SchemePair p)
+	public void apply(SchemePair p)
 	{
-		js.call("map", p);
+		js.call("ssdd_map", p);
 	}
 
-	public <T1, T2> void apply_map_function(T1 e1, T2 e2)
+	public <T1, T2> void apply(T1 e1, T2 e2)
 	{
-		apply_map_function(JScheme.list(e1,e2));
+		apply(JScheme.list(e1,e2));
 	}
 	
-	public String getScheme_map_function() {
-		return scheme_map_function;
+	public String getScheme_ssdd_map_function() {
+		return ssdd_map_function;
 	}
-	public void setScheme_map_function(String scheme_map_function) {
-		this.scheme_map_function = scheme_map_function;
+	public void setScheme_ssdd_map_function(String scheme_map_function) {
+		this.ssdd_map_function = scheme_map_function;
 	}
 	public Function<SchemePair, Void> getEmit_function() {
 		return emit_function;
 	}
 	public void setEmit_function(Function<SchemePair, Void> emit_function) {
 		this.emit_function = emit_function;
-		_install_emit_function();
+		_install_emit_map_functions();
 	}
 	public JScheme getJs() {
 		return js;

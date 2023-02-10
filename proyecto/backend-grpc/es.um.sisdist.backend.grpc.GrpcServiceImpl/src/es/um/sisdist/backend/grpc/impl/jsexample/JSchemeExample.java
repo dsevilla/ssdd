@@ -41,8 +41,8 @@ public class JSchemeExample
 		// Function calls
 		System.out.println(js.call("countdown", 42));
 		System.out.println("Length: " + js.call("retlength", list(1,2)));
-		Procedure p = new Procedure() {
-			
+		Procedure p = new Procedure() 
+		{	
 			private static final long serialVersionUID = 6988405761033921572L;
 
 			@Override
