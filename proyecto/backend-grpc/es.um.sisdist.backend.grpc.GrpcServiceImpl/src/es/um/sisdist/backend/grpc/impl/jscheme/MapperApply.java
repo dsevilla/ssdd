@@ -41,6 +41,19 @@ public class MapperApply
 		p.setName("emit");
 		js.setGlobalValue("emit", p);
 		
+		// load useful code
+		js.load("(define (reduce fn list init)"
+				+ "  (if (null? list) init"
+				+ "      (fn (car list)"
+				+ "          (reduce fn (cdr list) init)))))"
+				+ "(define (map f L)"
+				+ "  (if (null? L)"
+				+ "    ()\n"
+				+ "  (cons (f (car L))"
+				+ "    (map f (cdr L)))"
+				+ "  )"
+				+ ")");
+		
 		// ssdd_map
 		js.load(ssdd_map_function);
 	}

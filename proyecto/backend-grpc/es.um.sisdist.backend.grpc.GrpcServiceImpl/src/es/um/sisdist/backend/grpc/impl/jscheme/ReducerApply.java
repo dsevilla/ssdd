@@ -15,6 +15,19 @@ public class ReducerApply
 
 	private void _install_reduce_function()
 	{
+		// load useful code
+		js.load("(define (reduce fn list init)"
+				+ "  (if (null? list) init"
+				+ "      (fn (car list)"
+				+ "          (reduce fn (cdr list) init))))"
+				+ "(define (map f L)"
+				+ "  (if (null? L)"
+				+ "    ()\n"
+				+ "  (cons (f (car L))"
+				+ "    (map f (cdr L)))"
+				+ "  )"
+				+ ")");
+		
 		// ssdd_reduce
 		js.load(ssdd_reduce_function);
 	}
@@ -27,15 +40,9 @@ public class ReducerApply
 		_install_reduce_function();
 	}
 
-	public SchemePair apply(SchemePair p)
+	public <T1> Object apply(T1 e1, SchemePair e2)
 	{
-		var result = js.call("ssdd_reduce", p);
-		return JScheme.list(p.first(), result);
-	}
-
-	public <T1, T2> SchemePair apply(T1 e1, T2 e2)
-	{
-		return apply(JScheme.list(e1,e2));
+		return js.call("ssdd_reduce", e1, e2);
 	}
 	
 	public String getScheme_ssdd_map_function() {

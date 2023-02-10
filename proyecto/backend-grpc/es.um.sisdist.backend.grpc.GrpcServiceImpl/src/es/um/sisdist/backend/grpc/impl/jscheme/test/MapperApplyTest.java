@@ -72,6 +72,9 @@ class MapperApplyTest
 
 		ma.apply(list(3,4));
 		assertEquals(w.get(), 1);
+		
+		ma.apply(list("a", "b"));
+		assertEquals(w.get(), 2);
 	}
 
 	/**
