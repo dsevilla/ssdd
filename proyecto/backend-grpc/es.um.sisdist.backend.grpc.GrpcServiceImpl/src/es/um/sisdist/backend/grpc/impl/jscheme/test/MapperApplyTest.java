@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import es.um.sisdist.backend.grpc.impl.jscheme.JSchemeProvider;
 import es.um.sisdist.backend.grpc.impl.jscheme.MapperApply;
 import jscheme.JScheme;
 import static jscheme.JScheme.*;
@@ -34,7 +35,7 @@ class MapperApplyTest
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception
 	{
-		js = new JScheme();
+		js = JSchemeProvider.js();
 	}
 
 	/**
@@ -57,7 +58,7 @@ class MapperApplyTest
 				+ " (display (first p))"
 				+ " (display \": \")"
 				+ " (display (second p))"
-				+ " (emit (list (first p) (second p))))",
+				+ " (emit p))",
 				p ->  // emit function
 					{
 						System.out.println("Called: "
@@ -71,16 +72,7 @@ class MapperApplyTest
 		ma.apply(list(3,4));
 		assertEquals(w.get(), 1);
 		
-		ma.apply(list("a", "b"));
+		ma.apply("a", "b");
 		assertEquals(w.get(), 2);
 	}
-
-	/**
-	 * Test method for {@link es.um.sisdist.backend.grpc.impl.jscheme.MapperApply#apply_ssdd_map_function(java.lang.Object, java.lang.Object)}.
-	 */
-	@Test
-	void testApply_map_functionT1T2() 
-	{
-	}
-
 }

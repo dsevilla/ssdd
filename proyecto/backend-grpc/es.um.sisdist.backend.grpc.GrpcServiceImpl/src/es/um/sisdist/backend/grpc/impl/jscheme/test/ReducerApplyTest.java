@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import es.um.sisdist.backend.grpc.impl.jscheme.JSchemeProvider;
 import es.um.sisdist.backend.grpc.impl.jscheme.ReducerApply;
 import jscheme.JScheme;
 
@@ -27,7 +28,7 @@ class ReducerApplyTest
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception
 	{
-		js = new JScheme();
+		js = JSchemeProvider.js();
 	}
 
 	/**

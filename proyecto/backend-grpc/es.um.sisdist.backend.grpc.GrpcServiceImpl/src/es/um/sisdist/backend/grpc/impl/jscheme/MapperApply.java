@@ -25,27 +25,6 @@ public class MapperApply
 	
 	private void _install_emit_map_functions()
 	{
-		// load useful code
-		js.load("(define (filter f lst)\n"
-				+ "  (define (iter lst result)\n"
-				+ "    (cond\n"
-				+ "      ((null? lst) (reverse result))\n"
-				+ "      ((f (car lst)) (iter (cdr lst)\n"
-				+ "                           (cons (car lst) result)))\n"
-				+ "      (else (iter (cdr lst)\n"
-				+ "                  result))))\n"
-				+ "  (iter lst '()))\n"
-				+ "(define (reduce fn list init)"
-				+ "  (if (null? list) init"
-				+ "      (fn (car list)"
-				+ "          (reduce fn (cdr list) init))))"
-				+ "(define (map f L)"
-				+ "  (if (null? L)"
-				+ "    ()\n"
-				+ "  (cons (f (car L))"
-				+ "    (map f (cdr L)))))"
-				);
-
 		var p = new Procedure() {
 			private static final long serialVersionUID = 6988405761033921572L;
 

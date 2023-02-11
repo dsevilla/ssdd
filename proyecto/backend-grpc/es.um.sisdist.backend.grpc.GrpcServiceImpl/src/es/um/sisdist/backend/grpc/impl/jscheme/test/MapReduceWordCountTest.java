@@ -5,16 +5,19 @@ package es.um.sisdist.backend.grpc.impl.jscheme.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import static java.util.stream.Collectors.*;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import es.um.sisdist.backend.grpc.impl.jscheme.JSchemeProvider;
 import es.um.sisdist.backend.grpc.impl.jscheme.MapperApply;
 import es.um.sisdist.backend.grpc.impl.jscheme.ReducerApply;
 
@@ -37,8 +40,7 @@ class MapReduceWordCountTest
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception
 	{
-		js = new JScheme();
-
+		js =  JSchemeProvider.js();
 	}
 
 	/**
@@ -75,12 +77,13 @@ class MapReduceWordCountTest
 		Map<Object, SchemePair> result = new HashMap<>();
 		
 		// Mapper
-		MapperApply ma = new MapperApply(new JScheme(), 
-				"(define (ssdd_map p)"
+		MapperApply ma = new MapperApply(js, 
+				"(define (ssdd_map p)"  // Función identidad
 				+ " (display (first p))"
 				+ " (display \": \")"
 				+ " (display (second p))"
-				+ " (emit (list (first p) (second p))))",
+				+ " (display \"\\n\")"
+				+ " (emit p))",
 				p ->  // emit function
 					{
 						System.out.println("Called: "
@@ -93,17 +96,21 @@ class MapReduceWordCountTest
 						return null;
 					});
 		
-		ma.apply(list(1,1));
-		ma.apply(list(1,3));
-		ma.apply(list(1,3));
-		ma.apply(list(2,3));
-		ma.apply(list(2,3));
+		List<SchemePair> values = Arrays.asList(
+				list(1,1),
+				list(1,3),
+				list(1,3),
+				list(2,3),
+				list(2,3)
+				); 
+		
+		values.stream().forEach(p -> ma.apply(p));
 		
 		// 1 -> (1 3 3) -> 7
 		// 2 -> (3 3) -> 6
 		
 		// Reducer
-		ReducerApply ra = new ReducerApply(new JScheme(),
+		ReducerApply ra = new ReducerApply(js,
 				"(define (ssdd_reduce v l)"
 				+ " (reduce + l 0))");
 		shuffle_map.entrySet().forEach(e -> 
@@ -112,6 +119,26 @@ class MapReduceWordCountTest
 				result.put(e.getKey(), list(e.getKey(), res));
 			});
 
+		// Aplicar el mismo procesamiento en la lista java 
+		var result_java = values.stream().collect(
+						groupingBy(SchemePair::first,
+								reducing(list(null,null),
+										 (p1,p2) -> {
+											 if (p1.first() == null)
+												 return p2;
+											 return list(p1.first(),
+													 (Integer)p1.second() + (Integer)p2.second());
+										 }))
+						);
+		
+		result_java.entrySet().forEach(e -> {
+			SchemePair p = result.get(e.getKey());
+			assertNotNull(p);
+			assertEquals(e.getKey(), p.first());
+			assertEquals(e.getValue().first(), p.first());
+			assertEquals(e.getValue().second(), p.second());
+		});
+		
 		System.out.println("Done");
 	}
 }
