@@ -37,8 +37,9 @@ public class AppLogicImpl
     private AppLogicImpl()
     {
         daoFactory = new DAOFactoryImpl();
-
-        if (System.getenv("DB_BACKEND").equals("mongo"))
+        Optional<String> backend = Optional.ofNullable(System.getenv("DB_BACKEND"));
+        
+        if (backend.isPresent() && backend.get().equals("mongo"))
             dao = daoFactory.createMongoUserDAO();
         else
             dao = daoFactory.createSQLUserDAO();
