@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "es.um.sisdist.backend.grpc";
+
+package es.um.sisdist.backend.grpc;
+
+service GrpcService
+{
+    rpc Ping(PingRequest) returns (PingResponse);
+}
+
+message PingRequest
+{
+	int32 v = 1;
+}
+
+message PingResponse
+{
+	int32 v = 1;
+}

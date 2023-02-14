@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import es.um.sisdist.backend.grpc.GrpcServiceGrpc;
+import es.um.sisdist.backend.grpc.PingRequest;
 import es.um.sisdist.backend.grpc.VideoAvailability;
 import es.um.sisdist.backend.grpc.VideoSpec;
 import es.um.sisdist.backend.dao.DAOFactoryImpl;
@@ -73,12 +74,13 @@ public class AppLogicImpl
         return dao.getUserById(userId);
     }
 
-    public boolean isVideoReady(String userId, String videoId)
+    public boolean ping(int v)
     {
         // Test de grpc, puede hacerse con la BD
-    	var msg = VideoSpec.newBuilder().setUid(userId).setVid(videoId);
-        VideoAvailability available = blockingStub.isVideoReady(msg.build());
-        return available.getAvailable();
+    	var msg = PingRequest.newBuilder().setV(v).build();
+        var response = blockingStub.ping(msg);
+        
+        return response.getV() == v;
     }
 
     // El frontend, a través del formulario de login,

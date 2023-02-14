@@ -21,13 +21,13 @@ services:
       - MYSQL_DATABASE=ssdd
 
   backend-rest:
-    build: backend-rest/es.um.sisdist.videofaces.backend.Service/.
+    build: backend-rest/es.um.sisdist.backend.Service/.
     ports:
       - 8080:8080
     env_file: sql.env
 
   backend-grpc:
-    build: backend-grpc/es.um.sisdist.videofaces.backend.grpc.GrpcServiceImpl/.
+    build: backend-grpc/es.um.sisdist.backend.grpc.GrpcServiceImpl/.
     ports:
       - 50051
     env_file: sql.env
