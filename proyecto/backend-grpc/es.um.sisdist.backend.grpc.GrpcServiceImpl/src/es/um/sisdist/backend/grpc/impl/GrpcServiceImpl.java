@@ -5,10 +5,8 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import es.um.sisdist.backend.grpc.GrpcServiceGrpc;
-import es.um.sisdist.backend.grpc.PetitionAccepted;
-import es.um.sisdist.backend.grpc.VideoAvailability;
-import es.um.sisdist.backend.grpc.VideoAvailabilityOrBuilder;
-import es.um.sisdist.backend.grpc.VideoSpec;
+import es.um.sisdist.backend.grpc.PingRequest;
+import es.um.sisdist.backend.grpc.PingResponse;
 import io.grpc.stub.StreamObserver;
 
 class GrpcServiceImpl extends GrpcServiceGrpc.GrpcServiceImplBase 
@@ -21,22 +19,13 @@ class GrpcServiceImpl extends GrpcServiceGrpc.GrpcServiceImplBase
 		this.logger = logger;
 	}
 
-    
 	@Override
-	public void processVideo(VideoSpec request, StreamObserver<PetitionAccepted> res)
+	public void ping(PingRequest request, StreamObserver<PingResponse> responseObserver) 
 	{
-		// TODO Auto-generated method stub
-		return;
-	}
-
-	@Override
-	public void isVideoReady(VideoSpec request, StreamObserver<VideoAvailability> responseObserver)
-	{
-		// Acceder a la bd a través del dao y comprobar si el vídeo está procesado
-		boolean available = true;
-		responseObserver.onNext(VideoAvailability.newBuilder().setAvailable(available).build());
+		responseObserver.onNext(PingResponse.newBuilder().setV(request.getV()).build());
 		responseObserver.onCompleted();
 	}
+
 
 /*
 	@Override

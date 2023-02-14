@@ -9,7 +9,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/users")
+@Path("/u")
 public class UsersEndpoint
 {
     private AppLogicImpl impl = AppLogicImpl.getInstance();

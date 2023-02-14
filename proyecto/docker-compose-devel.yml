@@ -29,5 +29,5 @@ services:
   backend-grpc:
     build: backend-grpc/es.um.sisdist.backend.grpc.GrpcServiceImpl/.
     ports:
-      - 50051
+      - 50051:50051
     env_file: sql.env

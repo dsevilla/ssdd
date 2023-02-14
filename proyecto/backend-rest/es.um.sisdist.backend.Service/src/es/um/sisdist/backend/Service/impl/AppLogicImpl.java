@@ -8,8 +8,6 @@ import java.util.logging.Logger;
 
 import es.um.sisdist.backend.grpc.GrpcServiceGrpc;
 import es.um.sisdist.backend.grpc.PingRequest;
-import es.um.sisdist.backend.grpc.VideoAvailability;
-import es.um.sisdist.backend.grpc.VideoSpec;
 import es.um.sisdist.backend.dao.DAOFactoryImpl;
 import es.um.sisdist.backend.dao.IDAOFactory;
 import es.um.sisdist.backend.dao.models.User;
