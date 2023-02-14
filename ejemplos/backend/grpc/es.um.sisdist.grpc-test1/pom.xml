@@ -14,17 +14,17 @@
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-netty</artifactId>
-      <version>1.52.1</version>
+      <version>1.46.1</version>
     </dependency>
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-protobuf</artifactId>
-      <version>1.52.1</version>
+      <version>1.46.1</version>
     </dependency>
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-stub</artifactId>
-      <version>1.52.1</version>
+      <version>1.46.1</version>
     </dependency>
     <dependency>
       <groupId>com.google.protobuf</groupId>
@@ -50,7 +50,7 @@
             <artifactId>maven-assembly-plugin</artifactId>
             <version>3.0.0</version>
             <configuration>
-              <archive>
+	      <archive>
                 <manifest>
                   <mainClass>${mainClass}</mainClass>
                 </manifest>

@@ -70,7 +70,7 @@ class MapReduceWordCountTest
 	
 	@Test
 	void test() 
-	{
+	{		
 		Map<Object, List<Object>> shuffle_map =
 				new HashMap<>();
 
