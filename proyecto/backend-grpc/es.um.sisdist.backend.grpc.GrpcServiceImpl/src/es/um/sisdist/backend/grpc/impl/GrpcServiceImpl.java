@@ -22,6 +22,7 @@ class GrpcServiceImpl extends GrpcServiceGrpc.GrpcServiceImplBase
 	@Override
 	public void ping(PingRequest request, StreamObserver<PingResponse> responseObserver) 
 	{
+		logger.info("Recived PING request, value = " + request.getV());
 		responseObserver.onNext(PingResponse.newBuilder().setV(request.getV()).build());
 		responseObserver.onCompleted();
 	}
