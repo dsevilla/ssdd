@@ -25,52 +25,70 @@
       </plugin>
     </plugins>
   </build>
+  <dependencyManagement>
+		<dependencies>
+			<!-- https://mvnrepository.com/artifact/jakarta.platform/jakarta.jakartaee-bom -->
+			<dependency>
+			    <groupId>jakarta.platform</groupId>
+			    <artifactId>jakarta.jakartaee-bom</artifactId>
+			    <version>10.0.0</version>
+			    <type>pom</type>
+			    <scope>import</scope>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/org.glassfish.jersey/jersey-bom -->
+			<dependency>
+			    <groupId>org.glassfish.jersey</groupId>
+			    <artifactId>jersey-bom</artifactId>
+			    <version>3.1.1</version>
+			    <type>pom</type>
+			    <scope>import</scope>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-bom -->
+			<dependency>
+			    <groupId>org.glassfish.jaxb</groupId>
+			    <artifactId>jaxb-bom</artifactId>
+			    <version>4.0.2</version>
+			    <type>pom</type>
+			    <scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
   <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.glassfish/jakarta.json -->
-    <dependency>
-      <groupId>org.glassfish</groupId>
-      <artifactId>jakarta.json</artifactId>
-      <version>2.0.1</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client -->
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-client</artifactId>
-      <version>3.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-server</artifactId>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.containers</groupId>
       <artifactId>jersey-container-servlet</artifactId>
-      <version>3.1.1</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-json-jackson -->
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
       <artifactId>jersey-media-json-jackson</artifactId>
-      <version>3.1.1</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2 -->
     <dependency>
       <groupId>org.glassfish.jersey.inject</groupId>
       <artifactId>jersey-hk2</artifactId>
-      <version>3.1.1</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-jaxb -->
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
       <artifactId>jersey-media-jaxb</artifactId>
-      <version>3.1.1</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-runtime</artifactId>
-      <version>4.0.2</version>
     </dependency>
     <dependency>
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
-      <version>4.0.0</version>
     </dependency>
+	<!-- Por alguna razón, algún código oculto de glassfish parece estar usando estas clases -->
+
 	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-jaxb-annotations -->
 	<dependency>
 	    <groupId>com.fasterxml.jackson.module</groupId>
@@ -78,7 +96,6 @@
 	    <version>2.14.1</version>
 	</dependency>
 	<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
-	<!-- Por alguna razón, algún código oculto de glassfish parece estar usando estas clases -->
 	<dependency>
 	    <groupId>javax.xml.bind</groupId>
 	    <artifactId>jaxb-api</artifactId>
