@@ -81,7 +81,7 @@
 	    </dependency>
 	    <dependency>
 	      <groupId>org.glassfish.jersey.media</groupId>
-	      <artifactId>jersey-media-json-jackson</artifactId>
+	      <artifactId>jersey-media-json-binding</artifactId>
 	    </dependency>
 	    <dependency>
 	      <groupId>org.glassfish.jersey.inject</groupId>
@@ -99,21 +99,6 @@
 	      <groupId>jakarta.xml.bind</groupId>
 	      <artifactId>jakarta.xml.bind-api</artifactId>
 	    </dependency>
-
-		<!-- Por alguna razón, algún código oculto de glassfish parece estar usando estas clases -->
-		
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-jaxb-annotations -->
-		<dependency>
-		    <groupId>com.fasterxml.jackson.module</groupId>
-		    <artifactId>jackson-module-jaxb-annotations</artifactId>
-		    <version>2.14.1</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
-		<dependency>
-		    <groupId>javax.xml.bind</groupId>
-		    <artifactId>jaxb-api</artifactId>
-		    <version>2.3.1</version>
-		</dependency>
 
 		<!-- TEST -->
 		<dependency>

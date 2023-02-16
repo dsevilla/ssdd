@@ -4,7 +4,7 @@ import java.net.URI;
 
 import org.glassfish.jersey.client.ClientConfig;
 
-import com.fasterxml.jackson.core.util.JacksonFeature;
+//import com.fasterxml.jackson.core.util.JacksonFeature;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -18,7 +18,7 @@ public class TestClient
     {
         ClientConfig config = new ClientConfig();
         // config.property(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-        ClientBuilder.newBuilder().register(JacksonFeature.class);
+//        ClientBuilder.newBuilder().register(JacksonFeature.class);
         Client client = ClientBuilder.newClient(config);
         WebTarget service = client.target(getBaseURI());
         // Fluent interfaces
