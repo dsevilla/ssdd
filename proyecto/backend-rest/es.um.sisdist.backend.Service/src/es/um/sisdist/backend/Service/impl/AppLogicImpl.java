@@ -49,8 +49,7 @@ public class AppLogicImpl
         channel = ManagedChannelBuilder
                 .forAddress(grpcServerName.orElse("localhost"), Integer.parseInt(grpcServerPort.orElse("50051")))
                 // Channels are secure by default (via SSL/TLS). For the example we disable TLS
-                // to avoid
-                // needing certificates.
+                // to avoid needing certificates.
                 .usePlaintext().build();
         blockingStub = GrpcServiceGrpc.newBlockingStub(channel);
         //asyncStub = GrpcServiceGrpc.newStub(channel);
