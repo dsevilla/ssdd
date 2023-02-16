@@ -73,6 +73,8 @@ public class AppLogicImpl
 
     public boolean ping(int v)
     {
+    	logger.info("Issuing ping, value: " + v);
+    	
         // Test de grpc, puede hacerse con la BD
     	var msg = PingRequest.newBuilder().setV(v).build();
         var response = blockingStub.ping(msg);
