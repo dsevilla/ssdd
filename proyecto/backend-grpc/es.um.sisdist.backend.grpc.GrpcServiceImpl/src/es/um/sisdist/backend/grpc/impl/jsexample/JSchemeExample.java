@@ -9,7 +9,6 @@ import jscheme.SchemePair;
 import static jscheme.JScheme.*;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 
 import jsint.Procedure;
 

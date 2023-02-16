@@ -30,7 +30,7 @@ import jsint.Pair;
  * @author dsevilla
  *
  */
-class MapReduceWordCountTest 
+class MapReduceSimpleTest 
 {
 	static JScheme js;
 	
@@ -78,15 +78,12 @@ class MapReduceWordCountTest
 		
 		// Mapper
 		MapperApply ma = new MapperApply(js, 
-				"(import \"java.lang.String\")"
-				+ "(define (ssdd_map p)"
+				"(define (ssdd_map p)"  // Función identidad
 				+ " (display (first p))"
 				+ " (display \": \")"
 				+ " (display (second p))"
 				+ " (display \"\\n\")"
-				+ " (for-each (lambda (w)"
-				+ "				(emit (list w 1)))"
-				+ "   (vector->list (.split (second p) \" \"))))",
+				+ " (emit p))",
 				p ->  // emit function
 					{
 						System.out.println("Called: "
@@ -100,14 +97,17 @@ class MapReduceWordCountTest
 					});
 		
 		List<SchemePair> values = Arrays.asList(
-				list(1,"abc def ghi"),
-				list(2,"abc def thi"),
-				list(3,"abc def xhi"),
-				list(4,"abc def rhi"),
-				list(5,"abc def jhi")
+				list(1,1),
+				list(1,3),
+				list(1,3),
+				list(2,3),
+				list(2,3)
 				); 
 		
 		values.stream().forEach(p -> ma.apply(p));
+		
+		// 1 -> (1 3 3) -> 7
+		// 2 -> (3 3) -> 6
 		
 		// Reducer
 		ReducerApply ra = new ReducerApply(js,
@@ -120,10 +120,7 @@ class MapReduceWordCountTest
 			});
 
 		// Aplicar el mismo procesamiento en la lista java 
-		var result_java = values.stream().flatMap(p -> 
-			Arrays.asList(((String)p.second()).split(" ")).stream())
-				.map(w -> list(w,1))
-				.collect(
+		var result_java = values.stream().collect(
 						groupingBy(SchemePair::first,
 								reducing(list(null,null),
 										 (p1,p2) -> {
