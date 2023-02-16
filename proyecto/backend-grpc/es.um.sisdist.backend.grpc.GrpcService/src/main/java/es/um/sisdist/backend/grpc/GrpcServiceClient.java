@@ -31,6 +31,7 @@
 
 package es.um.sisdist.backend.grpc;
 
+/*
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
@@ -43,6 +44,7 @@ import java.util.logging.Logger;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Empty;
+*/
 
 /**
  * A simple client that requests a greeting from the {@link CollageServer}.

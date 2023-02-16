@@ -1,7 +1,5 @@
 package es.um.sisdist.backend.grpc.impl;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import es.um.sisdist.backend.grpc.GrpcServiceGrpc;

@@ -29,7 +29,7 @@ public class AppLogicImpl
 
     private final ManagedChannel channel;
     private final GrpcServiceGrpc.GrpcServiceBlockingStub blockingStub;
-    private final GrpcServiceGrpc.GrpcServiceStub asyncStub;
+    //private final GrpcServiceGrpc.GrpcServiceStub asyncStub;
 
     static AppLogicImpl instance = new AppLogicImpl();
 
@@ -53,7 +53,7 @@ public class AppLogicImpl
                 // needing certificates.
                 .usePlaintext().build();
         blockingStub = GrpcServiceGrpc.newBlockingStub(channel);
-        asyncStub = GrpcServiceGrpc.newStub(channel);
+        //asyncStub = GrpcServiceGrpc.newStub(channel);
     }
 
     public static AppLogicImpl getInstance()
