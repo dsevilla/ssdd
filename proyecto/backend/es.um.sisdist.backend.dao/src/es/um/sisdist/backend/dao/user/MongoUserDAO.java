@@ -39,7 +39,7 @@ public class MongoUserDAO implements IUserDAO
                 + ":27017/ssdd?authSource=admin";
 
         MongoClient mongoClient = MongoClients.create(uri);
-        MongoDatabase database = mongoClient.getDatabase("videofaces").withCodecRegistry(pojoCodecRegistry);
+        MongoDatabase database = mongoClient.getDatabase("ssdd").withCodecRegistry(pojoCodecRegistry);
         collection = database.getCollection("users", User.class);
     }
 
