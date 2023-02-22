@@ -25,15 +25,16 @@ public class SQLUserDAO implements IUserDAO
     {
         try
         {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            Class.forName("com.mysql.cj.jdbc.Driver").getConstructor().newInstance();
 
             // Si el nombre del host se pasa por environment, se usa aquí.
             // Si no, se usa localhost. Esto permite configurarlo de forma
             // sencilla para cuando se ejecute en el contenedor, y a la vez
             // se pueden hacer pruebas locales
-            Optional<String> sqlServerName = Optional.ofNullable(System.getenv("SQL_SERVER"));
+            String sqlServerName = Optional.ofNullable(System.getenv("SQL_SERVER")).orElse("localhost");
+            String dbName = Optional.ofNullable(System.getenv("DB_NAME")).orElse("ssdd");
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://" + sqlServerName.orElse("localhost") + "/ssdd?user=root&password=root");
+                    "jdbc:mysql://" + sqlServerName + "/" + dbName + "?user=root&password=root");
 
         } catch (Exception e)
         {

@@ -35,11 +35,14 @@ public class MongoUserDAO implements IUserDAO
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
 
         // Replace the uri string with your MongoDB deployment's connection string
-        String uri = "mongodb://root:root@" + Optional.ofNullable(System.getenv("MONGO_SERVER")).orElse("localhost")
+        String uri = "mongodb://root:root@" 
+        		+ Optional.ofNullable(System.getenv("MONGO_SERVER")).orElse("localhost")
                 + ":27017/ssdd?authSource=admin";
 
         MongoClient mongoClient = MongoClients.create(uri);
-        MongoDatabase database = mongoClient.getDatabase("ssdd").withCodecRegistry(pojoCodecRegistry);
+        MongoDatabase database = mongoClient
+        		.getDatabase(Optional.ofNullable(System.getenv("DB_NAME")).orElse("ssdd"))
+        		.withCodecRegistry(pojoCodecRegistry);
         collection = database.getCollection("users", User.class);
     }
 
