@@ -9,6 +9,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -27,7 +28,21 @@ import es.um.sisdist.backend.dao.models.User;
  */
 public class MongoUserDAO implements IUserDAO
 {
-    private MongoCollection<User> collection;
+	static <Z> Supplier<Z> lazily(Supplier<Z> supplier) 
+	{
+	    return new Supplier<Z>()
+	    {
+	        Z value; // = null
+	        @Override public Z get() 
+	        {
+	            if (value == null)
+	                value = supplier.get();
+	            return value;
+	        }
+	    };
+	}
+	
+    private Supplier<MongoCollection<User>> collection;
 
     public MongoUserDAO()
     {
@@ -39,24 +54,27 @@ public class MongoUserDAO implements IUserDAO
         		+ Optional.ofNullable(System.getenv("MONGO_SERVER")).orElse("localhost")
                 + ":27017/ssdd?authSource=admin";
 
-        MongoClient mongoClient = MongoClients.create(uri);
-        MongoDatabase database = mongoClient
+        collection = lazily(() -> 
+        {
+        	MongoClient mongoClient = MongoClients.create(uri);
+        	MongoDatabase database = mongoClient
         		.getDatabase(Optional.ofNullable(System.getenv("DB_NAME")).orElse("ssdd"))
         		.withCodecRegistry(pojoCodecRegistry);
-        collection = database.getCollection("users", User.class);
+        	return database.getCollection("users", User.class);
+        });
     }
 
     @Override
     public Optional<User> getUserById(String id)
     {
-        Optional<User> user = Optional.ofNullable(collection.find(eq("id", id)).first());
+        Optional<User> user = Optional.ofNullable(collection.get().find(eq("id", id)).first());
         return user;
     }
 
     @Override
     public Optional<User> getUserByEmail(String id)
     {
-        Optional<User> user = Optional.ofNullable(collection.find(eq("email", id)).first());
+        Optional<User> user = Optional.ofNullable(collection.get().find(eq("email", id)).first());
         return user;
     }
 

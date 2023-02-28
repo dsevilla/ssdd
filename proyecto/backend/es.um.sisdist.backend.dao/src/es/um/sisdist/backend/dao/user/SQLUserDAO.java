@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import es.um.sisdist.backend.dao.models.User;
 
@@ -16,31 +17,49 @@ import es.um.sisdist.backend.dao.models.User;
  * @author dsevilla
  *
  */
-@SuppressWarnings("deprecation")
 public class SQLUserDAO implements IUserDAO
 {
-    Connection conn;
+	static <Z> Supplier<Z> lazily(Supplier<Z> supplier) 
+	{
+	    return new Supplier<Z>()
+	    {
+	        Z value; // = null
+	        @Override public Z get() 
+	        {
+	            if (value == null)
+	                value = supplier.get();
+	            return value;
+	        }
+	    };
+	}
+
+	
+    Supplier<Connection> conn;
 
     public SQLUserDAO()
     {
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver").getConstructor().newInstance();
+    	conn = lazily(() -> 
+    	{
+    		try
+    		{
+    			Class.forName("com.mysql.cj.jdbc.Driver").getConstructor().newInstance();
 
-            // Si el nombre del host se pasa por environment, se usa aquí.
-            // Si no, se usa localhost. Esto permite configurarlo de forma
-            // sencilla para cuando se ejecute en el contenedor, y a la vez
-            // se pueden hacer pruebas locales
-            String sqlServerName = Optional.ofNullable(System.getenv("SQL_SERVER")).orElse("localhost");
-            String dbName = Optional.ofNullable(System.getenv("DB_NAME")).orElse("ssdd");
-            conn = DriverManager.getConnection(
+    			// Si el nombre del host se pasa por environment, se usa aquí.
+    			// Si no, se usa localhost. Esto permite configurarlo de forma
+    			// sencilla para cuando se ejecute en el contenedor, y a la vez
+    			// se pueden hacer pruebas locales
+    			String sqlServerName = Optional.ofNullable(System.getenv("SQL_SERVER")).orElse("localhost");
+    			String dbName = Optional.ofNullable(System.getenv("DB_NAME")).orElse("ssdd");
+    			return DriverManager.getConnection(
                     "jdbc:mysql://" + sqlServerName + "/" + dbName + "?user=root&password=root");
-
-        } catch (Exception e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    		} catch (Exception e)
+    		{
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+            
+    			return null;
+    		}
+    	});
     }
 
     @Override
@@ -56,7 +75,7 @@ public class SQLUserDAO implements IUserDAO
         PreparedStatement stm;
         try
         {
-            stm = conn.prepareStatement("SELECT * from users WHERE email = ?");
+            stm = conn.get().prepareStatement("SELECT * from users WHERE email = ?");
             stm.setString(1, id);
             ResultSet result = stm.executeQuery();
             if (result.next())
