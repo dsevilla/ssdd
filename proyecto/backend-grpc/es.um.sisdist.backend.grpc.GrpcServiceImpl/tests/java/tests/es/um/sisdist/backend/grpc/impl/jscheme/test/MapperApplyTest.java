@@ -46,19 +46,19 @@ class MapperApplyTest
 	}
 
 	/**
-	 * Test method for {@link es.um.sisdist.backend.grpc.impl.jscheme.MapperApply#apply_map_function(jscheme.SchemePair)}.
+	 * Test method 
 	 */
 	@Test
-	void testApply_map_functionSchemePair()
+	void testApply_map_function()
 	{
 		final Wrap w = new Wrap();
 		
 		MapperApply ma = new MapperApply(js, 
-				"(define (ssdd_map p)"
-				+ " (display (first p))"
+				"(define (ssdd_map k v)"
+				+ " (display k)"
 				+ " (display \": \")"
-				+ " (display (second p))"
-				+ " (emit p))",
+				+ " (display v)"
+				+ " (emit (list k v)))",
 				p ->  // emit function
 					{
 						System.out.println("Called: "
@@ -69,7 +69,7 @@ class MapperApplyTest
 						return null;
 					});
 
-		ma.apply(list(3,4));
+		ma.apply(3, 4);
 		assertEquals(w.get(), 1);
 		
 		ma.apply("a", "b");

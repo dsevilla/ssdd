@@ -74,15 +74,15 @@ class MapReduceWordCountTest
 		Map<Object, List<Object>> shuffle_map =
 				new HashMap<>();
 
-		Map<Object, SchemePair> result = new HashMap<>();
+		Map<Object, Object> result = new HashMap<>();
 		
 		// Mapper
 		MapperApply ma = new MapperApply(js, 
 				"(import \"java.lang.String\")"
-				+ "(define (ssdd_map p)"
-				+ " (display (first p))"
+				+ "(define (ssdd_map k v)"
+				+ " (display k)"
 				+ " (display \": \")"
-				+ " (display (second p))"
+				+ " (display v)"
 				+ " (display \"\\n\")"
 				+ " (for-each (lambda (w)"
 				+ "				(emit (list w 1)))"
@@ -107,16 +107,16 @@ class MapReduceWordCountTest
 				list(5,"abc def jhi")
 				); 
 		
-		values.stream().forEach(p -> ma.apply(p));
+		values.stream().forEach(p -> ma.apply(p.first(), p.second()));
 		
 		// Reducer
 		ReducerApply ra = new ReducerApply(js,
-				"(define (ssdd_reduce v l)"
+				"(define (ssdd_reduce k l)"
 				+ " (reduce + l 0))");
 		shuffle_map.entrySet().forEach(e -> 
 			{
 				Object res = ra.apply(e.getKey(), list_to_pair(e.getValue()));
-				result.put(e.getKey(), list(e.getKey(), res));
+				result.put(e.getKey(), res);
 			});
 
 		// Aplicar el mismo procesamiento en la lista java 
@@ -125,21 +125,16 @@ class MapReduceWordCountTest
 				.map(w -> list(w,1))
 				.collect(
 						groupingBy(SchemePair::first,
-								reducing(list(null,null),
+								reducing(0,
 										 (p1,p2) -> {
-											 if (p1.first() == null)
-												 return p2;
-											 return list(p1.first(),
-													 (Integer)p1.second() + (Integer)p2.second());
+											 return (Integer)p1 + (Integer)p2;
 										 }))
 						);
 		
 		result_java.entrySet().forEach(e -> {
-			SchemePair p = result.get(e.getKey());
-			assertNotNull(p);
-			assertEquals(e.getKey(), p.first());
-			assertEquals(e.getValue().first(), p.first());
-			assertEquals(e.getValue().second(), p.second());
+			Object v = result.get(e.getKey());
+			assertNotNull(v);
+			assertEquals(e.getValue(), v);
 		});
 		
 		System.out.println("Done");

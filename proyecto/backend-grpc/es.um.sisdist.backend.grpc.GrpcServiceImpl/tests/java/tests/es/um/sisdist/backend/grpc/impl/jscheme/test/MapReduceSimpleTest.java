@@ -74,16 +74,16 @@ class MapReduceSimpleTest
 		Map<Object, List<Object>> shuffle_map =
 				new HashMap<>();
 
-		Map<Object, SchemePair> result = new HashMap<>();
+		Map<Object, Object> result = new HashMap<>();
 		
 		// Mapper
 		MapperApply ma = new MapperApply(js, 
-				"(define (ssdd_map p)"  // Función identidad
-				+ " (display (first p))"
+				"(define (ssdd_map k v)"  // Función identidad
+				+ " (display k)"
 				+ " (display \": \")"
-				+ " (display (second p))"
+				+ " (display v)"
 				+ " (display \"\\n\")"
-				+ " (emit p))",
+				+ " (emit (list k v)))",
 				p ->  // emit function
 					{
 						System.out.println("Called: "
@@ -104,39 +104,34 @@ class MapReduceSimpleTest
 				list(2,3)
 				); 
 		
-		values.stream().forEach(p -> ma.apply(p));
+		values.stream().forEach(p -> ma.apply(p.first(), p.second()));
 		
 		// 1 -> (1 3 3) -> 7
 		// 2 -> (3 3) -> 6
 		
 		// Reducer
 		ReducerApply ra = new ReducerApply(js,
-				"(define (ssdd_reduce v l)"
+				"(define (ssdd_reduce k l)"
 				+ " (reduce + l 0))");
 		shuffle_map.entrySet().forEach(e -> 
 			{
 				Object res = ra.apply(e.getKey(), list_to_pair(e.getValue()));
-				result.put(e.getKey(), list(e.getKey(), res));
+				result.put(e.getKey(), res);
 			});
 
 		// Aplicar el mismo procesamiento en la lista java 
 		var result_java = values.stream().collect(
 						groupingBy(SchemePair::first,
-								reducing(list(null,null),
+								reducing(0,
 										 (p1,p2) -> {
-											 if (p1.first() == null)
-												 return p2;
-											 return list(p1.first(),
-													 (Integer)p1.second() + (Integer)p2.second());
+											 return (Integer)p1 + (Integer)p2;
 										 }))
 						);
 		
 		result_java.entrySet().forEach(e -> {
-			SchemePair p = result.get(e.getKey());
+			Object p = result.get(e.getKey());
 			assertNotNull(p);
-			assertEquals(e.getKey(), p.first());
-			assertEquals(e.getValue().first(), p.first());
-			assertEquals(e.getValue().second(), p.second());
+			assertEquals(e.getValue(), p);
 		});
 		
 		System.out.println("Done");
