@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import es.um.sisdist.backend.dao.models.User;
+import es.um.sisdist.backend.dao.utils.Lazy;
 
 /**
  * @author dsevilla
@@ -19,26 +20,11 @@ import es.um.sisdist.backend.dao.models.User;
  */
 public class SQLUserDAO implements IUserDAO
 {
-	static <Z> Supplier<Z> lazily(Supplier<Z> supplier) 
-	{
-	    return new Supplier<Z>()
-	    {
-	        Z value; // = null
-	        @Override public Z get() 
-	        {
-	            if (value == null)
-	                value = supplier.get();
-	            return value;
-	        }
-	    };
-	}
-
-	
     Supplier<Connection> conn;
 
     public SQLUserDAO()
     {
-    	conn = lazily(() -> 
+    	conn = Lazy.lazily(() -> 
     	{
     		try
     		{

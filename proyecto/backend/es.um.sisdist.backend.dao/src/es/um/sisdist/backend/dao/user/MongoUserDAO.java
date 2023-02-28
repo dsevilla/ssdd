@@ -21,6 +21,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import es.um.sisdist.backend.dao.models.User;
+import es.um.sisdist.backend.dao.utils.Lazy;
 
 /**
  * @author dsevilla
@@ -28,20 +29,6 @@ import es.um.sisdist.backend.dao.models.User;
  */
 public class MongoUserDAO implements IUserDAO
 {
-	static <Z> Supplier<Z> lazily(Supplier<Z> supplier) 
-	{
-	    return new Supplier<Z>()
-	    {
-	        Z value; // = null
-	        @Override public Z get() 
-	        {
-	            if (value == null)
-	                value = supplier.get();
-	            return value;
-	        }
-	    };
-	}
-	
     private Supplier<MongoCollection<User>> collection;
 
     public MongoUserDAO()
@@ -54,7 +41,7 @@ public class MongoUserDAO implements IUserDAO
         		+ Optional.ofNullable(System.getenv("MONGO_SERVER")).orElse("localhost")
                 + ":27017/ssdd?authSource=admin";
 
-        collection = lazily(() -> 
+        collection = Lazy.lazily(() -> 
         {
         	MongoClient mongoClient = MongoClients.create(uri);
         	MongoDatabase database = mongoClient
