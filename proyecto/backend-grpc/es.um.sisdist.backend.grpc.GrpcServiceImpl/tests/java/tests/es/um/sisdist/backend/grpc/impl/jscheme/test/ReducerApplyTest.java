@@ -42,7 +42,7 @@ class ReducerApplyTest
 	void test() 
 	{		
 		ReducerApply ra = new ReducerApply(js, 
-				"(define (ssdd_reduce v l)"
+				"(define (ssdd_reduce k l)"
 				+ " (reduce + l 0))");
 
 		assertEquals(14, 

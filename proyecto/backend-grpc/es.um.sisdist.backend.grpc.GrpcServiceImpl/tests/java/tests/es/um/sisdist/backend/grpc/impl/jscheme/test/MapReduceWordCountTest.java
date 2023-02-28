@@ -34,6 +34,15 @@ class MapReduceWordCountTest
 {
 	static JScheme js;
 	
+	public static void main(String[] args)
+	{
+		try {
+			setUpBeforeClass();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		new MapReduceWordCountTest().test();
+	}
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -86,7 +95,7 @@ class MapReduceWordCountTest
 				+ " (display \"\\n\")"
 				+ " (for-each (lambda (w)"
 				+ "				(emit (list w 1)))"
-				+ "   (vector->list (.split (second p) \" \"))))",
+				+ "   (vector->list (.split v \" \"))))",
 				p ->  // emit function
 					{
 						System.out.println("Called: "
@@ -111,8 +120,8 @@ class MapReduceWordCountTest
 		
 		// Reducer
 		ReducerApply ra = new ReducerApply(js,
-				"(define (ssdd_reduce k l)"
-				+ " (reduce + l 0))");
+				"(define (ssdd_reduce k l)" +
+				" (reduce + l 0))");
 		shuffle_map.entrySet().forEach(e -> 
 			{
 				Object res = ra.apply(e.getKey(), list_to_pair(e.getValue()));
@@ -126,9 +135,8 @@ class MapReduceWordCountTest
 				.collect(
 						groupingBy(SchemePair::first,
 								reducing(0,
-										 (p1,p2) -> {
-											 return (Integer)p1 + (Integer)p2;
-										 }))
+										 p -> (Integer)p.second(), // mapping
+										 (p1,p2) -> (Integer)p1 + (Integer)p2))
 						);
 		
 		result_java.entrySet().forEach(e -> {

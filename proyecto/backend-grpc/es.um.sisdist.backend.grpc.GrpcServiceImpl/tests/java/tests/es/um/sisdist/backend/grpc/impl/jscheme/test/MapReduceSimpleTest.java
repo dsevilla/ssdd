@@ -34,6 +34,16 @@ class MapReduceSimpleTest
 {
 	static JScheme js;
 	
+	public static void main(String[] args)
+	{
+		try {
+			setUpBeforeClass();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		new MapReduceSimpleTest().test();
+	}
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -123,7 +133,7 @@ class MapReduceSimpleTest
 		var result_java = values.stream().collect(
 						groupingBy(SchemePair::first,
 								reducing(0,
-										 SchemePair::second, // mapping
+										 p -> (Integer)p.second(), // mapping
 										 (p1,p2) -> {
 											 return (Integer)p1 + (Integer)p2;
 										 }))
