@@ -123,6 +123,7 @@ class MapReduceSimpleTest
 		var result_java = values.stream().collect(
 						groupingBy(SchemePair::first,
 								reducing(0,
+										 SchemePair::second, // mapping
 										 (p1,p2) -> {
 											 return (Integer)p1 + (Integer)p2;
 										 }))
