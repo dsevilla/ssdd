@@ -7,12 +7,14 @@ import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
 import static com.mongodb.client.model.Filters.eq;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+import static java.util.Arrays.*;
 
 import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.Conventions;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
 import com.mongodb.client.MongoClient;
@@ -33,7 +35,7 @@ public class MongoUserDAO implements IUserDAO
 
     public MongoUserDAO()
     {
-        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().conventions(asList(Conventions.ANNOTATION_CONVENTION)).automatic(true).build();
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
 
         // Replace the uri string with your MongoDB deployment's connection string
