@@ -7,7 +7,7 @@ import es.um.sisdist.backend.dao.models.utils.UserUtils;
 
 public class User
 {
-    private String uid;
+    private String id;
     private String email;
     private String password_hash;
     private String name;
@@ -19,17 +19,17 @@ public class User
     /**
      * @return the id
      */
-    public String getUid()
+    public String getId()
     {
-        return uid;
+        return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setUid(final String uid)
+    public void setId(final String uid)
     {
-        this.uid = uid;
+        this.id = uid;
     }
 
     /**
@@ -115,12 +115,12 @@ public class User
     public User(String email, String password_hash, String name, String tOKEN, int visits)
     {
         this(email, email, password_hash, name, tOKEN, visits);
-        this.uid = UserUtils.md5pass(email);
+        this.id = UserUtils.md5pass(email);
     }
 
     public User(String id, String email, String password_hash, String name, String tOKEN, int visits)
     {
-        this.uid = id;
+        this.id = id;
         this.email = email;
         this.password_hash = password_hash;
         this.name = name;
@@ -131,7 +131,7 @@ public class User
     @Override
     public String toString()
     {
-        return "User [uid=" + uid + ", email=" + email + ", password_hash=" + password_hash + ", name=" + name
+        return "User [id=" + id + ", email=" + email + ", password_hash=" + password_hash + ", name=" + name
                 + ", TOKEN=" + token + ", visits=" + visits + "]";
     }
 

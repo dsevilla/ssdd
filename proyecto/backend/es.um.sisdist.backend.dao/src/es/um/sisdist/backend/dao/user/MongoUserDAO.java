@@ -12,6 +12,7 @@ import static java.util.Arrays.*;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.Conventions;
@@ -66,5 +67,4 @@ public class MongoUserDAO implements IUserDAO
         Optional<User> user = Optional.ofNullable(collection.get().find(eq("email", id)).first());
         return user;
     }
-
 }

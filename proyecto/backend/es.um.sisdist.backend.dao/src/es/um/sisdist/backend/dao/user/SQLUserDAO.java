@@ -88,5 +88,4 @@ public class SQLUserDAO implements IUserDAO
             return Optional.empty();
         }
     }
-
 }
