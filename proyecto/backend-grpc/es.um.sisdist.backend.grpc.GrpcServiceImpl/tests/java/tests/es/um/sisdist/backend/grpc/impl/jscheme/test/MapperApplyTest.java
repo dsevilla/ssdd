@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import es.um.sisdist.backend.grpc.impl.jscheme.JSchemeProvider;
 import es.um.sisdist.backend.grpc.impl.jscheme.MapperApply;
 import jscheme.JScheme;
-import static jscheme.JScheme.*;
 
 /**
  * @author dsevilla

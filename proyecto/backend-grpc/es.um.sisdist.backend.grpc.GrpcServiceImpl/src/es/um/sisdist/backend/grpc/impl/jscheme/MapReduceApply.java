@@ -7,13 +7,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-
 import jscheme.JScheme;
 import jscheme.SchemePair;
 import jsint.Pair;
-import jsint.Procedure;
 
 /**
  * 

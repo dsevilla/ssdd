@@ -1,6 +1,5 @@
 package es.um.sisdist.backend.grpc.impl.jscheme;
 
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import jscheme.JScheme;
