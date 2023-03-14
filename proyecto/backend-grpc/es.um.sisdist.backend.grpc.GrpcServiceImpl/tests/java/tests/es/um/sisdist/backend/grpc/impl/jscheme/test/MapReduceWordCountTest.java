@@ -66,7 +66,9 @@ class MapReduceWordCountTest
 				); 
 		
 		// Mapper
-		MapReduceApply mar = new MapReduceApply(js, 
+		MapReduceApply mar = new MapReduceApply(js,
+				
+				// Función map
 				"(import \"java.lang.String\")"
 				+ "(define (ssdd_map k v)"
 				+ " (display k)"
@@ -76,8 +78,10 @@ class MapReduceWordCountTest
 				+ " (for-each (lambda (w)"
 				+ "				(emit (list w 1)))"
 				+ "   (vector->list (.split v \" \"))))",
+				
+				// Función reduce
 				"(define (ssdd_reduce k l)" +
-				" (reduce + l 0))");
+				" (apply + l))");
 		
 		values.stream().forEach(p -> mar.apply(p.first(), p.second()));
 

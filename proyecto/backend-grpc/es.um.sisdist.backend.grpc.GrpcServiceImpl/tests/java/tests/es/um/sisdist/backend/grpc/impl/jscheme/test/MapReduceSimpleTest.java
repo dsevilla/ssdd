@@ -62,8 +62,10 @@ class MapReduceSimpleTest
 		MapReduceApply mar = new MapReduceApply(js, 
 				"(define (ssdd_map k v)"  // Función identidad
 				+ " (emit (list k v)))",
+				
+				// Función reduce
 				"(define (ssdd_reduce k l)"
-				+ " (reduce + l 0))");
+				+ " (apply + l))");
 		
 		List<SchemePair> values = Arrays.asList(
 				list(1,1),
