@@ -29,7 +29,7 @@ public class ReducerApply
 
 	public <T1> Object apply(T1 e1, SchemePair e2)
 	{
-		return js.call("ssdd_reduce", e1, e2);
+		return js.call("ssdd-reduce", e1, e2);
 	}
 	
 	public String getScheme_ssdd_map_function() {

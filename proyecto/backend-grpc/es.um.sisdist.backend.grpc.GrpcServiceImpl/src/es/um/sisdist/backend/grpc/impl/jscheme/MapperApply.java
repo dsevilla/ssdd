@@ -63,7 +63,7 @@ public class MapperApply
 
 	public <T1, T2> void apply(T1 k, T2 v)
 	{
-		js.call("ssdd_map", k, v);
+		js.call("ssdd-map", k, v);
 	}
 
 	public String getScheme_ssdd_map_function() {
