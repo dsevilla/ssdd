@@ -13,6 +13,7 @@
         {% endwith %}
 
         <form method="POST" action="/signup">
+            {{ form.hidden_tag() }}
             <div class="field">
                 <div class="control">
                     <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
