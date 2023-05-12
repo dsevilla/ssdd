@@ -70,7 +70,7 @@ class MapReduceWordCountTest
 				
 				// Función map
 				"(import \"java.lang.String\")"
-				+ "(define (ssdd_map k v)"
+				+ "(define (ssdd-map k v)"
 				+ " (display k)"
 				+ " (display \": \")"
 				+ " (display v)"
@@ -80,7 +80,7 @@ class MapReduceWordCountTest
 				+ "   (vector->list (.split v \" \"))))",
 				
 				// Función reduce
-				"(define (ssdd_reduce k l)" +
+				"(define (ssdd-reduce k l)" +
 				" (apply + l))");
 		
 		values.stream().forEach(p -> mar.apply(p.first(), p.second()));

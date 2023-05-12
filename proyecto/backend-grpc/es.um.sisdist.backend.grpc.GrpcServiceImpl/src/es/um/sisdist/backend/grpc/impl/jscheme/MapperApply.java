@@ -41,7 +41,7 @@ public class MapperApply
 		p.setName("emit");
 		js.setGlobalValue("emit", p);
 		
-		// ssdd_map
+		// ssdd-map
 		js.load(ssdd_map_function);
 	}
 	

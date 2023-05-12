@@ -53,7 +53,7 @@ class MapperApplyTest
 		final Wrap w = new Wrap();
 		
 		MapperApply ma = new MapperApply(js, 
-				"(define (ssdd_map k v)"
+				"(define (ssdd-map k v)"
 				+ " (display k)"
 				+ " (display \": \")"
 				+ " (display v)"
