@@ -1,4 +1,4 @@
-flask==3.0.0
+flask==3.0.1
 flask-login==0.6.3
 flask-WTF==1.2.1
 requests==2.28.2
