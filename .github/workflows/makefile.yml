@@ -1,0 +1,30 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ 'main', 'v*' ]
+  pull_request:
+    branches: [ 'main', 'v*' ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: proyecto
+    steps:
+
+    - name: Checkout the repo.
+      uses: actions/checkout@v4
+
+    - name: Install needed ubuntu packages.
+      uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: openjdk-11-jdk maven
+        version: 1.0
+
+    - name: build proyecto
+      run: make
