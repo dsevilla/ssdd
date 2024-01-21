@@ -4,7 +4,7 @@ services:
   ssdd-frontend:
     image: dsevilla/ssdd-frontend:1.0
     ports:
-      - 5000:5000
+      - 5010:5000
     env_file: sql.env
     environment:
       - FLASK_APP=app/app.py

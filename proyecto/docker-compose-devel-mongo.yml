@@ -4,7 +4,7 @@ services:
   ssdd-frontend:
     build: frontend/.
     ports:
-      - 5000:5000
+      - 5010:5000
     env_file: mongo.env
     environment:
       - FLASK_APP=app/app.py

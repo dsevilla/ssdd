@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile-devel
     ports:
-      - "5000:5000"
+      - "5010:5000"
     volumes:
       - .:/ssdd-frontend
     user: root
