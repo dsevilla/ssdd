@@ -5,12 +5,11 @@ services:
     build: .
     ports:
       - "5010:5000"
-    volumes:
-      - .:/flask-example
-    user: root
-    stdin_open: true # docker run -i
-    tty: true        # docker run -t
     environment:
       - FLASK_APP=app/app.py
       - FLASK_DEBUG=true
+    volumes:
+      - .:/flask-example
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
 
