@@ -8,12 +8,6 @@
       <mainClass>es.um.sisdist.backend.grpc.impl.GrpcServiceServer</mainClass>
       <exec.mainClass>${mainClass}</exec.mainClass>
   </properties>
-	<repositories>
-    		<repository>
-        		<id>local-maven-repo</id>
-			<url>file:///${project.basedir}/local-maven-repo</url>
-    		</repository>
-	</repositories>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -26,12 +20,6 @@
 		</dependencies>
 	</dependencyManagement>
   <dependencies>
-		<dependency>
-			<groupId>org.norvig</groupId>
-			<artifactId>jscheme-7.2</artifactId>
-			<version>7.2</version>
-		</dependency>
-
 		<!-- TEST -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
