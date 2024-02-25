@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  ssdd-llamachat:
+    build: .
+    ports: 
+      - 5020:5000
+    volumes:
+      - .:/ssdd-llamachat
+
