@@ -1,3 +1,2 @@
 flask==3.0.1
-transformers==4.31.0
 ctransformers==0.2.27
