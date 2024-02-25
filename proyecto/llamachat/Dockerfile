@@ -1,8 +1,8 @@
 FROM python:3.10-slim
 
-COPY . /ssdd-frontend
+COPY . /ssdd-llamachat
 
-WORKDIR /ssdd-frontend
+WORKDIR /ssdd-llamachat
 
 RUN pip install -r requirements.txt
 
