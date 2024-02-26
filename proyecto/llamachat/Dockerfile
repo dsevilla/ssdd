@@ -5,6 +5,7 @@ COPY . /ssdd-llamachat
 WORKDIR /ssdd-llamachat
 
 RUN pip install -r requirements.txt
+RUN python initmodel.py
 
 ENV FLASK_APP="app/app.py"
 ENV FLASK_DEBUG=true

@@ -11,7 +11,7 @@ services:
       - FLASK_DEBUG=true
 
   ssdd-llamachat:
-    build: llamachat/.
+    image: dsevilla/ssdd-llamachat:1.0
     ports:
       - 5020:5000
 
