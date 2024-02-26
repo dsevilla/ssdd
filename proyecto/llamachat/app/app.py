@@ -3,44 +3,72 @@ import http
 import time
 from threading import Thread, Lock
 from flask import Flask, Response, redirect, request, url_for, jsonify
-from ctransformers import AutoModelForCausalLM
+import os
+
+class LLM_base:
+    _llm = None
+    llm_set = False
+
+    # Prompt map
+    prompt_map = {}
+    # Prompt request stack
+    prompt_stack = []
+    prompt_map_lock = Lock()  # Will be used for both the map and the stack
+    
+    def init_model(self):
+        pass
+
+    def llm(self, token, prompt):
+        pass
+
+if os.environ.get('DUMMY'):
+    class LLM(LLM_base):
+
+        def init_model(self):
+            time.sleep(5)
+            self.llm_set = True
+
+        def llm(self, token, prompt):
+            time.sleep(5)
+            return f"""DUMMY Generated response for token "{token}"."""
+else:
+    class LLM(LLM_base):
+
+        def init_model(self):
+            from ctransformers import AutoModelForCausalLM
+
+            # Set gpu_layers to the number of layers to offload to GPU. Set to 0 if no GPU acceleration is available on your system.
+            self._llm = AutoModelForCausalLM.from_pretrained("TheBloke/Llama-2-7b-Chat-GGUF",
+                                                        model_file="llama-2-7b-chat.Q4_K_M.gguf",
+                                                        model_type="llama",
+                                                        gpu_layers=0)
+            self.llm_set = True
+
+        def llm(self, token, prompt):
+            return self._llm(prompt)
+        
+        
+llm = LLM()
 
 app = Flask(__name__, static_url_path='')
 
-llm = None
-llm_set = False
-
-# Prompt map
-prompt_map = {}
-# Prompt request stack
-prompt_stack = []
-prompt_map_lock = Lock()  # Will be used for both the map and the stack
-
 def init_model_and_process_requests():
     global llm
-    global llm_set
-    global prompt_stack
-    global prompt_map_lock
 
-    # Set gpu_layers to the number of layers to offload to GPU. Set to 0 if no GPU acceleration is available on your system.
-    llm = AutoModelForCausalLM.from_pretrained("TheBloke/Llama-2-7b-Chat-GGUF",
-                                               model_file="llama-2-7b-chat.Q4_K_M.gguf",
-                                               model_type="llama",
-                                               gpu_layers=0)
-    llm_set = True
+    llm.init_model()
 
     # infinite loop
     while True:
-        prompt_map_lock.acquire()
-        if len(prompt_stack) == 0:
-            prompt_map_lock.release()
+        llm.prompt_map_lock.acquire()
+        if len(llm.prompt_stack) == 0:
+            llm.prompt_map_lock.release()
             time.sleep(.1)
         else:
-            (token, prompt) = prompt_stack.pop(0)
-            prompt_map_lock.release()
+            (token, prompt) = llm.prompt_stack.pop(0)
+            llm.prompt_map_lock.release()
 
             # Generate a response
-            prompt['answer'] = llm(prompt['prompt'].strip())
+            prompt['answer'] = llm.llm(token, prompt['prompt'].strip())
 
 Thread(target=init_model_and_process_requests).start()
 
@@ -48,12 +76,12 @@ def handle_response_request(prompt: dict) -> dict:
     # Generate UUID for request
     token = str(uuid.uuid4())
     # Lock the access to the map
-    prompt_map_lock.acquire()
+    llm.prompt_map_lock.acquire()
     # Push the pending work on the stack
-    prompt_stack.append((token, prompt))
+    llm.prompt_stack.append((token, prompt))
     # And add it incomplete to the prompt map
-    prompt_map[token] = prompt
-    prompt_map_lock.release()
+    llm.prompt_map[token] = prompt
+    llm.prompt_map_lock.release()
     
     return token
 
@@ -69,7 +97,7 @@ def index():
 @app.route('/prompt', methods=['GET', 'POST'])
 def prompt():
     if request.method == "POST":
-        if not llm_set:
+        if not llm.llm_set:
             return Response('Still initializing...\n', http.HTTPStatus.PROCESSING)
         if not request.is_json or not request.json['prompt']:
             return Response('application/json type required, with {"prompt": "..."} format.\n',
@@ -83,11 +111,11 @@ def prompt():
 
 @app.route('/response/<token>', methods=['GET'])
 def resp(token):
-    if not llm_set:
+    if not llm.llm_set:
         return Response('Still initializing...\n', http.HTTPStatus.NO_CONTENT)
-    prompt_map_lock.acquire()
-    res = prompt_map.get(str(token), None)
-    prompt_map_lock.release()
+    llm.prompt_map_lock.acquire()
+    res = llm.prompt_map.get(str(token), None)
+    llm.prompt_map_lock.release()
     if not res:
         return Response('Token unknown.\n', http.HTTPStatus.NOT_FOUND)
     if not res.get('answer', None):
@@ -98,7 +126,7 @@ def resp(token):
 
 @app.route('/healthcheck', methods=['GET'])
 def healthcheck():
-    if not llm_set:
+    if not llm.llm_set:
         return Response(status=http.HTTPStatus.NO_CONTENT)
     return Response(status=http.HTTPStatus.OK)
 
