@@ -1,5 +1,6 @@
 import uuid
 import http
+import time
 from threading import Thread, Lock
 from flask import Flask, Response, redirect, request, url_for, jsonify
 from ctransformers import AutoModelForCausalLM
@@ -8,15 +9,19 @@ app = Flask(__name__, static_url_path='')
 
 llm = None
 llm_set = False
-llm_lock = Lock()
 
 # Prompt map
 prompt_map = {}
-prompt_map_lock = Lock()
+# Prompt request stack
+prompt_stack = []
+prompt_map_lock = Lock()  # Will be used for both the map and the stack
 
-def init_model():
+def init_model_and_process_requests():
     global llm
     global llm_set
+    global prompt_stack
+    global prompt_map_lock
+
     # Set gpu_layers to the number of layers to offload to GPU. Set to 0 if no GPU acceleration is available on your system.
     llm = AutoModelForCausalLM.from_pretrained("TheBloke/Llama-2-7b-Chat-GGUF",
                                                model_file="llama-2-7b-chat.Q4_K_M.gguf",
@@ -24,23 +29,29 @@ def init_model():
                                                gpu_layers=0)
     llm_set = True
 
-Thread(target=init_model).start()
+    # infinite loop
+    while True:
+        prompt_map_lock.acquire()
+        if len(prompt_stack) == 0:
+            prompt_map_lock.release()
+            time.sleep(.1)
+        else:
+            (token, prompt) = prompt_stack.pop(0)
+            prompt_map_lock.release()
 
-def generate_response(prompt: dict):
-    llm_lock.acquire()
-    prompt['answer'] = llm(prompt['prompt'].strip())
-    llm_lock.release()
+            # Generate a response
+            prompt['answer'] = llm(prompt['prompt'].strip())
+
+Thread(target=init_model_and_process_requests).start()
 
 def handle_response_request(prompt: dict) -> dict:
     # Generate UUID for request
     token = str(uuid.uuid4())
     # Lock the access to the map
     prompt_map_lock.acquire()
+    prompt_stack.append((token, prompt))
     prompt_map[token] = prompt
     prompt_map_lock.release()
-
-    # Generate a new llm thread
-    Thread(target=generate_response,args=[prompt]).start()
     
     return token
 
@@ -58,14 +69,13 @@ def prompt():
     if request.method == "POST":
         if not llm_set:
             return Response('Still initializing...\n', http.HTTPStatus.PROCESSING)
-        if llm_lock.locked():
-            return Response('Generating previous response... Please, try again later...\n',
-                            http.HTTPStatus.PROCESSING)
         if not request.is_json or not request.json['prompt']:
             return Response('application/json type required, with {"prompt": "..."} format.\n',
                              http.HTTPStatus.UNSUPPORTED_MEDIA_TYPE)
         token = handle_response_request(request.json)
-        return Response('Accepted\n', status=http.HTTPStatus.ACCEPTED, headers={"Location": f"/response/{token}"})
+        return Response('Accepted\n', 
+                        status=http.HTTPStatus.ACCEPTED,
+                        headers={"Location": f"/response/{token}"})
     else:
         return "🦙chat v 1.0! Use POST to ask for a prompt."
 

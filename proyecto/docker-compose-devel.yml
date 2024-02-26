@@ -10,6 +10,10 @@ services:
       - FLASK_APP=app/app.py
       - FLASK_DEBUG=true
 
+  ssdd-llamachat:
+    build: llamachat/.
+    ports:
+      - 5020:5000
 
   db-mysql:
     build: db-mysql/.
