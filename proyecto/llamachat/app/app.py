@@ -49,7 +49,9 @@ def handle_response_request(prompt: dict) -> dict:
     token = str(uuid.uuid4())
     # Lock the access to the map
     prompt_map_lock.acquire()
+    # Push the pending work on the stack
     prompt_stack.append((token, prompt))
+    # And add it incomplete to the prompt map
     prompt_map[token] = prompt
     prompt_map_lock.release()
     
@@ -88,7 +90,7 @@ def resp(token):
     prompt_map_lock.release()
     if not res:
         return Response('Token unknown.\n', http.HTTPStatus.NOT_FOUND)
-    if not res.get('answer',None):
+    if not res.get('answer', None):
         return Response('Response still being generated.\n',
                         http.HTTPStatus.PROCESSING)
     else:
@@ -102,6 +104,6 @@ def healthcheck():
 
 if __name__ == '__main__':
     # Start the download of the model, if needed
-    Thread(target=init_model).start()
+    Thread(target=init_model_and_process_requests).start()
 
     app.run(debug=True, host='0.0.0.0')
