@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile-devel
     ports:
-      - "5010:5000"
+      - "5010:5010"
     volumes:
       - .:/ssdd-frontend
     user: root
@@ -15,4 +15,5 @@ services:
     environment:
       - FLASK_APP=app/app.py
       - FLASK_DEBUG=false
+      - PORT=5010
 

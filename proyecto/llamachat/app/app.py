@@ -50,7 +50,6 @@ else:
         
 llm = LLM()
 
-app = Flask(__name__, static_url_path='')
 
 def init_model_and_process_requests():
     global llm
@@ -84,6 +83,10 @@ def handle_response_request(prompt: dict) -> dict:
     llm.prompt_map_lock.release()
     
     return token
+
+
+app = Flask(__name__, static_url_path='', port=)
+
 
 # Configurar el secret_key. OJO, no debe ir en un servidor git público.
 # Python ofrece varias formas de almacenar esto de forma segura, que
@@ -134,4 +137,4 @@ if __name__ == '__main__':
     # Start the download of the model, if needed
     Thread(target=init_model_and_process_requests).start()
 
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5020)))

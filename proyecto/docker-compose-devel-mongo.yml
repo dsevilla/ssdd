@@ -4,16 +4,17 @@ services:
   ssdd-frontend:
     build: frontend/.
     ports:
-      - 5010:5000
+      - 5010:5010
     env_file: mongo.env
     environment:
       - FLASK_APP=app/app.py
       - FLASK_DEBUG=true
+      - PORT=5010
 
   ssdd-llamachat:
     image: dsevilla/ssdd-llamachat:1.0
     ports:
-      - 5020:5000
+      - 5020:5020
 
   db-mongo:
     build: db-mongo/.
