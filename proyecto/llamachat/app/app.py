@@ -85,7 +85,7 @@ def handle_response_request(prompt: dict) -> dict:
     return token
 
 
-app = Flask(__name__, static_url_path='', port=)
+app = Flask(__name__, static_url_path='')
 
 
 # Configurar el secret_key. OJO, no debe ir en un servidor git público.
