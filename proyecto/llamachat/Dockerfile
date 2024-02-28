@@ -9,6 +9,7 @@ RUN python initmodel.py
 
 ENV FLASK_APP="app/app.py"
 ENV FLASK_DEBUG=true
+ENV PORT=5020
 
 EXPOSE 5020
 
