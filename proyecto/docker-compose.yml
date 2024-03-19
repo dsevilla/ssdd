@@ -26,13 +26,13 @@ services:
       - MYSQL_DATABASE=ssdd
 
   backend-rest:
-    image: dsevilla/backend-rest:1.0
+    image: dsevilla/ssdd-backend-rest:1.0
     ports:
       - 8080:8080
     env_file: sql.env
 
   backend-grpc:
-    image: dsevilla/backend-grpc:1.0
+    image: dsevilla/ssdd-backend-grpc:1.0
     ports:
       - 50051
     env_file: sql.env
