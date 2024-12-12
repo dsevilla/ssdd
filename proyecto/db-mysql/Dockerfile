@@ -1,4 +1,4 @@
-FROM mysql:8
+FROM mysql
 
 ENV MYSQL_DATABASE=ssdd \
     MYSQL_ROOT_PASSWORD=root
@@ -6,4 +6,3 @@ ENV MYSQL_DATABASE=ssdd \
 ADD schema.sql /docker-entrypoint-initdb.d
 
 EXPOSE 3306
-
