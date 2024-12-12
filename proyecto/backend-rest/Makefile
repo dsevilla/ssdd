@@ -2,6 +2,16 @@ backend-rest:
 	(cd es.um.sisdist.backend.Service \
 		&& mvn -DskipTests clean package)
 
+build:
+	(cd es.um.sisdist.backend.Service \
+		&& docker run \
+		   -v $$(pwd):/var/maven \
+		   -v ~/.m2:/var/maven/.m2 -ti \
+		   -w /var/maven \
+		   --rm -u $$(id -u) \
+		   -e MAVEN_CONFIG=/var/maven/.m2 maven:3-alpine \
+		   mvn -Duser.home=/var/maven -DskipTests clean package)
+
 containers:
 	(cd es.um.sisdist.backend.Service \
 		&& docker build -t dsevilla/ssdd-backend-rest:1.0 .)
