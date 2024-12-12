@@ -20,11 +20,8 @@ jobs:
       - name: Checkout the repo.
         uses: actions/checkout@v4
 
-      - name: Install needed ubuntu packages.
-        uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: openjdk-11-jdk maven
-          version: 1.0
+      - name: Create an empty .m2 directory for the default user. If not, scripts may fail
+        run: mkdir -p ~/.m2
 
       - name: build proyecto
         run: make
