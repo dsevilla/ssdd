@@ -1,2 +1,2 @@
-flask==3.0.1
-ctransformers==0.2.27
+flask
+ctransformers

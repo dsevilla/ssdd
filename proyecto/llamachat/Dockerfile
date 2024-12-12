@@ -1,10 +1,10 @@
-FROM python:3.10-slim
+FROM python:3.12-alpine
 
 COPY . /ssdd-llamachat
 
 WORKDIR /ssdd-llamachat
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 RUN python initmodel.py
 
 ENV FLASK_APP="app/app.py"
