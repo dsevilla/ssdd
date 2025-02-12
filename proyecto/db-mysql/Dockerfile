@@ -1,4 +1,4 @@
-FROM mysql
+FROM mysql:8
 
 ENV MYSQL_DATABASE=ssdd \
     MYSQL_ROOT_PASSWORD=root
