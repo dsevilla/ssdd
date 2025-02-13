@@ -29,7 +29,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=root
       - MONGO_INITDB_DATABASE=ssdd
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongosh db-mongo:27017/test --quiet
+      test: echo 'db.runCommand("ping").ok' | mongo db-mongo:27017/test --quiet
       interval: 10s
       timeout: 10s
       retries: 7
