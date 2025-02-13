@@ -27,8 +27,8 @@ services:
       test: echo 'SELECT 1' | mysql -h db-mysql -u root -p$$MYSQL_ROOT_PASSWORD $$MYSQL_DATABASE
       interval: 10s
       timeout: 10s
-      retries: 5
-      start_period: 2s
+      retries: 7
+      start_period: 20s
 
   backend-rest:
     image: dsevilla/ssdd-backend-rest:1.0
