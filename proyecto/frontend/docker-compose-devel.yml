@@ -13,5 +13,5 @@ services:
     tty: true        # docker run -t
     environment:
       - FLASK_APP=app/app.py
-      - FLASK_DEBUG=false
+      - FLASK_DEBUG=true
       - PORT=5010

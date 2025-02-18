@@ -10,7 +10,7 @@ WORKDIR /ssdd-frontend
 RUN pip install --no-cache-dir -r requirements.txt
 
 ENV FLASK_APP="app/app.py"
-ENV FLASK_DEBUG=false
+ENV FLASK_DEBUG=true
 ENV PORT=5010
 
 EXPOSE 5010

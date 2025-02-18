@@ -1,7 +1,9 @@
 services:
 
   ssdd-frontend:
-    build: frontend/.
+    build:
+      context: frontend
+      dockerfile: Dockerfile.devel
     ports:
       - 5010:5010
     env_file: sql.env
@@ -9,6 +11,8 @@ services:
       - FLASK_APP=app/app.py
       - FLASK_DEBUG=true
       - PORT=5010
+    volumes:
+      - ./frontend:/ssdd-frontend
     depends_on:
       db-mysql:
         condition: service_healthy
