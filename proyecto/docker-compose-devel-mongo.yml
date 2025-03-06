@@ -3,7 +3,7 @@ services:
   ssdd-frontend:
     build:
       context: frontend
-      dockerfile: Dockerfile.devel
+      dockerfile: Dockerfile-devel
     ports:
       - 5010:5010
     env_file: mongo.env
