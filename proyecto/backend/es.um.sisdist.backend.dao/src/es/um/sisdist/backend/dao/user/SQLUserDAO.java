@@ -55,16 +55,19 @@ public class SQLUserDAO implements IUserDAO
     @Override
     public Optional<User> getUserByEmail(String id)
     {
-        PreparedStatement stm;
+        Optional<PreparedStatement> stm;
+        if (conn.isEmpty())
+            return Optional.empty();
+
         try
         {
-            stm = conn.map((Connection c) -> c.prepareStatement("SELECT * from users WHERE email = ?")).orElse(null);
-            if (stm != null) {
-                stm.setString(1, id);
-                ResultSet result = stm.executeQuery();
-                if (result.next())
-                    return createUser(result);
-            }
+            stm = Optional.ofNullable(conn.get().prepareStatement("SELECT * from users WHERE email = ?"));
+            if (stm.isEmpty())
+                return Optional.empty();
+            stm.get().setString(1, id);
+            ResultSet result = stm.get().executeQuery();
+            if (result.next())
+                return createUser(result);
         } catch (SQLException e)
         {
             // Fallthrough
