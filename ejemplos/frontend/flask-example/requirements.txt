@@ -1,5 +1,5 @@
-flask==3.0.1
-flask-login==0.6.3
-flask-WTF==1.2.1
-requests==2.28.2
-email_validator==2.1.0.post1
+flask
+flask-login
+flask-WTF
+requests
+email_validator
