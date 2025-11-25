@@ -2,9 +2,9 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ '24-25', '23-24', 'v*' ]
+    branches: [ '25-26', '24-25', '23-24', 'v*' ]
   pull_request:
-    branches: [ '24-25', '23-24', 'v*' ]
+    branches: [ '25-26', '24-25', '23-24', 'v*' ]
 
 permissions:
   contents: write
