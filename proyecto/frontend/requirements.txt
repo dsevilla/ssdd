@@ -3,3 +3,4 @@ flask-login>=0.6.3
 flask-WTF>=1.2.1
 requests
 email_validator>=2.1
+pyjwt
