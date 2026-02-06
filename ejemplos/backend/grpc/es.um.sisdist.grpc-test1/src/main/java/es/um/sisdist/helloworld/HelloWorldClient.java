@@ -42,7 +42,7 @@ import java.util.logging.Logger;
 /**
  * A simple client that requests a greeting from the {@link HelloWorldServer}.
  */
-public class HelloWorldClient 
+public class HelloWorldClient
 {
   private static final Logger logger = Logger.getLogger(HelloWorldClient.class.getName());
 
@@ -50,7 +50,7 @@ public class HelloWorldClient
   private final GreeterGrpc.GreeterBlockingStub blockingStub;
 
   /** Construct client connecting to HelloWorld server at {@code host:port}. */
-  public HelloWorldClient(String host, int port) 
+  public HelloWorldClient(String host, int port)
   {
     channel = ManagedChannelBuilder.forAddress(host, port)
         // Channels are secure by default (via SSL/TLS). For the example we disable TLS to avoid
@@ -72,7 +72,7 @@ public class HelloWorldClient
     try {
       response = blockingStub.sayHello(request);
     } catch (StatusRuntimeException e) {
-      logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+      logger.log(Level.WARNING, "RPC failed: {}", e.getStatus());
       return;
     }
     logger.info("Greeting: " + response.getMessage());
