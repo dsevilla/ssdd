@@ -53,7 +53,7 @@ public class Hello
     }
 
     @GET
-    @Produces(MediaType.TEXT_XML)
+    @Produces(MediaType.APPLICATION_XML)
     @Path("item")
     public Item item()
     {
@@ -79,7 +79,7 @@ public class Hello
     }
 
     @POST
-    @Consumes(MediaType.TEXT_XML)
+    @Consumes(MediaType.APPLICATION_XML)
     @Path("item")
     public void newItem(Item i)
     {

@@ -38,6 +38,6 @@ public class TestClient
     private static URI getBaseURI()
     {
         return UriBuilder.fromUri(
-                "http://localhost:8080/es.um.sisdist.RestTest").build();
+                "http://localhost:8080/Service").build();
     }
 }

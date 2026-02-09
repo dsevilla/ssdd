@@ -21,14 +21,13 @@ public class SerializeTest {
 			item.setUri("http://TestURI");
 
 			m.marshal(item, writer);
-			
+
 			System.out.println(writer.toString());
-			
+
 			Unmarshaller um = context.createUnmarshaller();
 			Item q = (Item)um.unmarshal(new StringReader(writer.toString()));
 			System.out.println(q.getUri());
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
