@@ -4,7 +4,7 @@ SUBDIRS = frontend backend backend-grpc backend-rest
 all: $(SUBDIRS)
 
 run-devel:
-	docker-compose -f docker-compose-devel.yml up
+	docker compose -f docker-compose-devel-mongo.yml up --build
 
 containers: $(SUBDIRS)
 	for i in $(SUBDIRS); do \

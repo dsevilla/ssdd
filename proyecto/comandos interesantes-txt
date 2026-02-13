@@ -1,0 +1,10 @@
+docker compose -f docker-compose-devel-mongo.yml up --build
+
+docker exec -it proyecto-db-mongo-1 -uroot -p
+
+docker container rm proyecto-db-mongo-1
+
+
+para hacer una reseteadita
+docker system prune -a
+docker cpmpose build -f el fichero docker que quieras
