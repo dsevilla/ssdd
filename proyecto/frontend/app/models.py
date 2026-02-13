@@ -26,3 +26,29 @@ class User(UserMixin):
 
     def __repr__(self):
         return '<User {}>'.format(self.email)
+
+
+class Chat():
+    
+    def __init__(self, id, name, nextToken, status, list):
+        self.id = id
+        self.name = name
+        self.nextToken = nextToken
+        self.status = status
+        self.dialogues = list
+
+    def __repr__(self):
+        return '<Chat {}>'.format(self.name)
+
+
+class Dialogue():
+
+    def __init__(self, id, prompt, answer, timestamp):
+        self.id = id
+        self.prompt = prompt
+        self.answer = answer
+        self.timestamp = timestamp
+
+    def __repr__(self):
+        return '<Dialogue {}>'.format(self.prompt)
+    

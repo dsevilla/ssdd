@@ -121,6 +121,12 @@ public class UserDTO
         this.visits = visits;
     }
 
+    @Override
+    public String toString() {
+        return "UserDTO [id=" + id + ", email=" + email + ", password=" + password + ", name=" + name + ", token="
+                + token + ", visits=" + visits + "]";
+    }
+
     public UserDTO()
     {
     }

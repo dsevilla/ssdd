@@ -90,4 +90,39 @@ public class SQLUserDAO implements IUserDAO
             return Optional.empty();
         }
     }
+
+
+    @Override
+    public boolean registerUser(User newUser) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'registerUser'");
+    }
+
+
+    @Override
+    public boolean deleteUserByID(String userID) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteUserByID'");
+    }
+
+
+    @Override
+    public boolean addNewChat(String userId, String chatId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addNewChat'");
+    }
+
+
+    @Override
+    public boolean deleteUserByEmail(String email) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteUserByEmail'");
+    }
+
+
+    @Override
+    public boolean updateUser(User updatedUser) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateUser'");
+    }
 }
