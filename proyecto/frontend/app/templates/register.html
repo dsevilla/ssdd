@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block custom_style %}
+ <!-- Custom styles for this template -->
+    <link href="/static/register.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main class="form-signup">
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Sign Up</h3>
+    <div class="form-signup">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}<br> Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="/register">
+            {{ form.hidden_tag() }}
+
+             <div class="form-signin">
+                <label for="floatingEmail">Correo electrónico</label>
+                <input class="form-control" name="email" placeholder="nombre@ejemplo.es" id="floatingEmail">
+                {% for error in form.email.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="form-signin">
+                <label for="floatingid">Identificador</label>
+                <input class="form-control" type="id" name="id" placeholder="userExample" id="floatingid">
+                {% for error in form.id.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+            
+            <div class="form-signin">
+                <br>
+                <label for="floatingName">Nombre de Usuario</label>
+                <input class="form-control" name="username" placeholder="Tu nombre" id="floatingUsername">
+                {% for error in form.username.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+            
+            <div class="form-signin">
+                <br>
+                <label for="floatingPassword">Password</label>
+                <input class="form-control" type="password" name="password" placeholder="Password" id="floatingPassword">
+            </div>
+            <br>
+            <button class="btn-primary btn-lg" type="submit"> Registrarse </button>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}<br> Ir a  la página de <a href="{{ url_for('login') }}">login</a>.
+                </div>
+            {% endif %}
+            {% endwith %}
+            
+        </form>
+    </div>
+</div>
+</main>
+{% endblock %}

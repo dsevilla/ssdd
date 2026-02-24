@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 
 import es.um.sisdist.backend.grpc.GrpcServiceGrpc;
 import es.um.sisdist.backend.grpc.PingRequest;
+import es.um.sisdist.models.UserDTO;
+import es.um.sisdist.models.UserDTOUtils;
 import es.um.sisdist.backend.dao.DAOFactoryImpl;
 import es.um.sisdist.backend.dao.IDAOFactory;
 import es.um.sisdist.backend.dao.models.User;
@@ -15,6 +17,7 @@ import es.um.sisdist.backend.dao.models.utils.UserUtils;
 import es.um.sisdist.backend.dao.user.IUserDAO;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import jakarta.ws.rs.core.Response;
 
 /**
  * @author dsevilla
@@ -98,5 +101,26 @@ public class AppLogicImpl
         }
 
         return Optional.empty();
+    }
+
+    public boolean registerUser(UserDTO user){
+        User u = UserDTOUtils.fromDTO(user);
+        
+        return dao.registerUser(u);
+    }
+
+    //helper para el register
+    public boolean userExists(User u){
+        // if(!(dao.getUserByEmail(u.getEmail()).equals(Optional.empty())
+        //         || dao.getUserById(u.getId()).equals(Optional.empty()))){ 
+        //     return true;
+        // }
+        // return false;
+
+        return dao.getUserByEmail(u.getEmail()).equals(Optional.empty()) 
+            ? dao.getUserById(u.getId()).equals(Optional.empty()) 
+                ? true
+                : false
+            : false;
     }
 }

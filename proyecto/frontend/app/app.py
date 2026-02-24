@@ -7,7 +7,9 @@ import os
 from models import users, User
 
 # Login
-from forms import LoginForm
+from forms import LoginForm, RegisterForm
+
+import logging
 
 app = Flask(__name__, static_url_path='')
 login_manager = LoginManager()
@@ -49,6 +51,59 @@ def login():
 @login_required
 def profile():
     return render_template('profile.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    else:
+        error = None
+        form = RegisterForm()
+        if request.method == "POST":
+            if form.validate_on_submit():
+                query_url = ('http://backend-rest:8080/Service/register')
+                userdata = {
+                    'id' : form.id.data,
+                    'name' : form.username.data, 
+                    'email' : form.email.data,
+                    'password' : form.password.data
+                }
+                headers = {'Content-Type': 'application/json'}
+
+                logging.info("Formulario validado")
+                logging.info(str(userdata))
+                r = requests.post(query_url, json=userdata, headers=headers)
+                logging.info(r.text)
+
+                if r.status_code == 201:
+                    id_obj = r.json() 
+                    user_id = id_obj['id']
+                    user = User(user_id, form.username.data, form.email.data, form.password.data)
+                    logging.info('usuario registrado con id ' + str(user_id))
+
+                    users.append(user)
+                    return redirect(url_for('login'))
+                if r.status_code == 401: 
+                    error = 'Error: El usuario ya existe.'
+                    # flash(error)
+                    return redirect(url_for('register'))
+                else:
+                    # flash("Error en el registro. Inténtalo de nuevo.", "danger")
+                    return redirect(url_for('register'))
+                
+                # if r.status_code == 401: 
+                #     error = 'El usuario ya existe.'
+                #     flash(error)
+                #     render_template('signup.html', form=form,  error=error)
+                # else:
+                #     print('xd')
+            else: 
+                for field_name, errors in form.errors.items():
+                    for error in errors:
+                        print(f"Error en el campo '{field_name}': {error}")
+
+        return render_template('register.html', form=form,  error=error)
+
 
 @app.route('/logout')
 @login_required

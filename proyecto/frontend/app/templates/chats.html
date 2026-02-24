@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block custom_style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='chats.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <h2>Chats</h2>
+        <!-- aquí irán los chats. Se debe hacer una petición al REST para obtener la lista-->
+        {% if chats %}
+            <ul class="list-group">
+                {% for chat in chats %}
+                    <li class="list-group-item p-0">
+                        <a class="list-group-item list-group-item-action" href="{{ url_for('mostrar_chat', userid=userid, chatid=chat['id']) }}">
+                            {{ chat['name'] or 'Chat sin nombre' }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay chats disponibles.</p>
+        {% endif %}
+        <br>
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#chatModal">+</button>
+
+        {#<!-- <form method="post" action="{{ url_for('nuevo_dialogue') }}"> 
+        <button type="submit" class="btn"> + </button>
+        </form> -->#}
+    </div>
+
+    {% if chat_seleccionado %}
+    <!-- Mostrar el historial del chat -->
+        <div class="main-content">
+            
+            Caja de mensajes 
+            <div class="chat-box" id="chatBox">
+            {% if chat_seleccionado.dialogues and chat_seleccionado.dialogues|length > 0 %}
+                {% for mensaje in chat_seleccionado.dialogues %}
+                    <div class="message user-message">{{ mensaje.prompt }}</div>
+                    <div class="message bot-message">{{ mensaje.answer }}</div>
+                {% endfor %}
+            {% else %}
+                <div class="message bot-message">¡Hola! ¿En qué puedo ayudarte?</div>
+            {% endif %}
+            </div>
+
+            <!-- Caja de texto para enviar nuevos mensajes 
+            Esto habrá que modificarlo con la función para enviar mensaje de app.py-->
+            <form method="post" action="{{ url_for('enviar_prompt',
+                                userid=userid, chatid=chat_seleccionado['id']) }}">
+                
+                <input type="hidden" name="nextToken" value="{{ chat_seleccionado['nextUrl'] }}">
+                {% if chat_seleccionado.status == "READY" %}
+                <div class="input-group mt-3">
+                    <input type="text" name="mensaje" class="form-control" placeholder="Escribe tu mensaje...">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+                {% endif %}
+            </form>
+        </div>
+        <!--- Script para hacer polling al servidor, una vez se ha enviado una prompt -->
+        <script>
+        function esperarRespuesta(requestId) {
+            console.log("requestId: ", requestId)
+            const intervalId = setInterval(() => {
+                fetch("http://localhost:8080/Service/" + requestId)
+                    .then(res =>{
+                        console.log("respuesta recibida del checkPrimpt: ", res.status)
+                        if (res.status === 204) {
+                            // todavía no se ha generado la solicitud
+                            return null;
+                        }
+                        if (!res.ok) {
+                            throw new Error("Error en la respuesta del servidor: " + res.status);
+                        }
+                        return res.json();
+                    } )
+                    .then(data => {
+                        if (!data) return;  // nada que hacer si no hay datos
+
+                        console.log("Datos recibidos del backend:", data);
+
+                        clearInterval(intervalId);
+                        if (data.status === 'done') {
+                            const chatBox = document.getElementById('chatBox');
+                            const respuesta = document.createElement('div');
+                            respuesta.className = "mensaje respuesta";
+                            respuesta.textContent = data.answer;
+                            chatBox.appendChild(respuesta);
+                            fetch('http://localhost:5010/{{ userid }}/chats')
+                        } else if (data.status === 'error') {
+                            clearInterval(intervalId);
+                            alert("Error al obtener la respuesta: " + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error al hacer polling:", error);
+                    });
+            }, 3000);
+        }
+        </script>
+        <!-- Desde aquí se llama al script más abajo para hacer polling al servidor y obtener la respuesta -->
+        {% if request_id %}
+            <div class="alert alert-info mt-3" role="alert">
+                Esperando respuesta del servidor...
+            </div>
+            <script>
+                esperarRespuesta("{{ request_id }}");
+            </script>
+        {% endif %}
+        {% if busy_chat %}
+            <div class="alert alert-info mt-3" role="alert">
+                El servidor todavía está procesando la respuesta anterior...
+            </div>
+        {% endif %}
+    {% else %}
+        <!-- Si no hay chat seleccionado -->
+        <div class="text-center mt-5 neutral-text">
+            <p class="neutral-text">Selecciona un chat de la lista o crea uno nuevo para comenzar.</p>
+
+            <!-- Botón que abre el modal para nuevo chat -->
+            <button type="button" class="btn button" data-bs-toggle="modal" data-bs-target="#chatModal"> Nuevo Chat </button>
+        </div> 
+    {% endif %}
+
+</div>
+
+<!--- Ventana modal que aparece al crear un nuevho chat con alguno de los botones -->
+<div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="chatModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post" action="{{ url_for('nuevo_chat', userid=current_user.id) }}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chatModalLabel">Nuevo chat</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="chat_name" class="form-control" placeholder="Nombre del chat" required>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

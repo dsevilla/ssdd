@@ -1,0 +1,30 @@
+html,
+body {
+  height: 100%;
+}
+
+
+.form-signup {
+  width: 100%;
+  max-width: 450px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signup .checkbox {
+  font-weight: 400;
+}
+
+.form-signup .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signup input {
+  margin-bottom: 0px;
+}
+
+.form-error {
+    color: #d9534f;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
