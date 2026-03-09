@@ -3,7 +3,8 @@ docker compose -f docker-compose-devel-mongo.yml up --build
 docker exec -it proyecto-db-mongo-1 -uroot -p
 
 docker container rm proyecto-db-mongo-1
-
+docker container rm proyecto-backend-rest-1
+docker image rm proyecto-backend-rest
 
 para hacer una reseteadita
 docker system prune -a

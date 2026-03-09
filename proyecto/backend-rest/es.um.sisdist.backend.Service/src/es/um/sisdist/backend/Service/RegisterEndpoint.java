@@ -38,7 +38,7 @@ public class RegisterEndpoint {
             return Response.status(Status.NOT_ACCEPTABLE).build();         
         }
 
-        System.out.println("El usuario no está vacío");
+        System.out.println("endpoint: El usuario no está vacío");
 
         User user = UserDTOUtils.fromDTO(newUser);
 
@@ -49,7 +49,7 @@ public class RegisterEndpoint {
 
         System.out.println("El usuario no existe");
 
-        if(impl.registerUser(newUser)){
+        if(impl.registerUser(user)){
             return Response.status(Status.CREATED)
             .entity("{\"id\": \"" + user.getId() + "\"}")
             .type(MediaType.APPLICATION_JSON)
