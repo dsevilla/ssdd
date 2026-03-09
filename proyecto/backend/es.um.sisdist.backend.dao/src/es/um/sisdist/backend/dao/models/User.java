@@ -3,6 +3,8 @@
  */
 package es.um.sisdist.backend.dao.models;
 
+import java.util.List;
+
 import es.um.sisdist.backend.dao.models.utils.UserUtils;
 
 public class User
@@ -13,6 +15,9 @@ public class User
     private String name;
 
     private String token;
+
+    //una lista de referencias a los ids de los chats
+    private List<String> chatList;
 
     private int visits;
 
@@ -128,6 +133,10 @@ public class User
         this.visits = visits;
     }
 
+    public List<String> getChatList(){
+        return chatList;
+    }
+    
     @Override
     public String toString()
     {

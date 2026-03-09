@@ -9,7 +9,7 @@ class User(UserMixin):
         self.id = id
         self.name = name
         self.email = email
-        self.password = hashlib.sha256(password).hexdigest()
+        self.password = hashlib.sha256(password.encode('utf-8')).hexdigest()
         self.is_admin = is_admin
 
     def set_password(self, password):

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory, url_for, request, redirect
+from flask import Flask, render_template, send_from_directory, url_for, request, redirect, flash
 from flask_login import LoginManager, login_manager, current_user, login_user, login_required, logout_user
 import requests
 import os
@@ -35,15 +35,50 @@ def login():
     else:
         error = None
         form = LoginForm(None if request.method != 'POST' else request.form)
-        if request.method == "POST" and form.validate():
-            if form.email.data != 'admin@um.es' or form.password.data != 'admin':
-                error = 'Invalid Credentials. Please try again.'
-            else:
-                user = User(1, 'admin', form.email.data.encode('utf-8'),
-                            form.password.data.encode('utf-8'))
+        if request.method == "POST" and form.validate_on_submit():
+            query_url = ('http://backend-rest:8080/Service/checkLogin')
+            userdata = {
+                'email' : form.email.data,
+                'password' : form.password.data
+            }
+            headers = {'Content-Type': 'application/json'}
+
+            r = requests.post(query_url, json=userdata, headers=headers)
+
+            if r.ok:
+                # recibir los datos del usuario desde el backend y construir un usuario
+                # buscarlo en users (load_user) y si no está, añadirlo
+                # llamar a login_user
+                json_user = r.json()
+                print("user logged in")
+                print(json_user)
+
+                user = load_user(json_user['id'])
+                if user is None:
+                    user = User(json_user['id'], json_user['name'], json_user['email'], form.password.data)
+                
                 users.append(user)
                 login_user(user, remember=form.remember_me.data)
-                return redirect(url_for('index'))
+                
+                return redirect(url_for('chats', userid=current_user.id))
+
+            if r.status_code == 403:
+                error = 'Las credenciales no coinciden con ninguna cuenta.'
+                return render_template('login.html', error=error, form=form)
+                
+            else: 
+                logging.info("el formulario no es válido")
+                logging.info(form.email.data)
+                logging.info(form.password.data)
+                return render_template('login.html', form=form, error=error)
+            # if form.email.data != 'admin@um.es' or form.password.data != 'admin':
+            #     error = 'Invalid Credentials. Please try again.'
+            # else:
+            #     user = User(1, 'admin', form.email.data.encode('utf-8'),
+            #                 form.password.data.encode('utf-8'))
+            #     users.append(user)
+            #     login_user(user, remember=form.remember_me.data)
+            #     return redirect(url_for('index'))
 
         return render_template('login.html', form=form,  error=error)
 
@@ -73,6 +108,7 @@ def register():
                 logging.info("Formulario validado")
                 logging.info(str(userdata))
                 r = requests.post(query_url, json=userdata, headers=headers)
+                print("form enviado desde el front", flush=True)
                 logging.info(r.text)
 
                 if r.status_code == 201:
@@ -83,12 +119,12 @@ def register():
 
                     users.append(user)
                     return redirect(url_for('login'))
-                if r.status_code == 401: 
+                if r.status_code == 409: 
                     error = 'Error: El usuario ya existe.'
-                    # flash(error)
+                    flash(error)
                     return redirect(url_for('register'))
                 else:
-                    # flash("Error en el registro. Inténtalo de nuevo.", "danger")
+                    flash("Error en el registro. Inténtalo de nuevo.", "danger")
                     return redirect(url_for('register'))
                 
                 # if r.status_code == 401: 
@@ -118,5 +154,11 @@ def load_user(user_id):
             return user
     return None
 
+@app.route('/chats')
+@login_required
+def chats():
+    return(render_template('chats.html'))
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5010)))
+

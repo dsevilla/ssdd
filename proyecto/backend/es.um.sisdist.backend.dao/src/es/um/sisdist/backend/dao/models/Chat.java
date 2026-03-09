@@ -38,7 +38,6 @@ public class Chat {
         this.creationDate = DateUtils.getCurrentDateISO();
         this.lastUpdateDate = DateUtils.getCurrentDateISO();
         this.nextToken = UUID.randomUUID().toString().replace("-", "").substring(0, 6);
-
     }
 
     public Chat(String user_id, String name, ChatStatus status, List<Dialogue> conversation) {
