@@ -1,5 +1,6 @@
 package es.um.sisdist.backend.Service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -138,6 +139,6 @@ public class AppLogicImpl
 
     //////////////////////// CHATS /////////////////////
     public List<Chat> getChatList(){
-        
+        return new ArrayList<Chat>();
     }
 }

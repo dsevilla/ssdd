@@ -150,14 +150,28 @@ def logout():
 @login_manager.user_loader
 def load_user(user_id):
     for user in users:
-        if user.id == int(user_id):
+        if user.id == user_id:
             return user
     return None
 
-@app.route('/chats')
+@app.route('/chats', methods=['GET', 'POST'])
 @login_required
-def chats():
-    return(render_template('chats.html'))
+def chats(): 
+#def chats(userid, chatlist?):
+    userid = 'borrame'
+    query_url = f'http://backend-rest:8080/Service/u/{userid}/chat'
+    try:
+        r = requests.get(query_url)
+        r.raise_for_status()
+        chatlist_json = r.json()
+        
+    except requests.RequestException as e:
+        print(f"Error al obtener los chats: {e}")
+        chatlist_json = []
+            
+    return render_template('chats.html')
+    #return render_template('chats.html', userid=current_user.id ,chats=chatlist_json)
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5010)))

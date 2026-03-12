@@ -15,7 +15,10 @@
             <ul class="list-group">
                 {% for chat in chats %}
                     <li class="list-group-item p-0">
-                        <a class="list-group-item list-group-item-action" href="{{ url_for('mostrar_chat', userid=userid, chatid=chat['id']) }}">
+                        {#<!--
+                            <a class="list-group-item list-group-item-action" href="{{ url_for('mostrar_chat', userid=userid, chatid=chat['id']) }}">
+                        -->#}
+                            <a class="list-group-item list-group-item-action" href="{{ url_for('chats') }}"></a>
                             {{ chat['name'] or 'Chat sin nombre' }}
                         </a>
                     </li>
@@ -32,6 +35,7 @@
         </form> -->#}
     </div>
 
+    {#
     {% if chat_seleccionado %}
     <!-- Mostrar el historial del chat -->
         <div class="main-content">
@@ -117,22 +121,24 @@
                 El servidor todavía está procesando la respuesta anterior...
             </div>
         {% endif %}
-    {% else %}
+        {% else %}
         <!-- Si no hay chat seleccionado -->
         <div class="text-center mt-5 neutral-text">
             <p class="neutral-text">Selecciona un chat de la lista o crea uno nuevo para comenzar.</p>
-
+            
             <!-- Botón que abre el modal para nuevo chat -->
             <button type="button" class="btn button" data-bs-toggle="modal" data-bs-target="#chatModal"> Nuevo Chat </button>
         </div> 
-    {% endif %}
-
+        {% endif %}
+    #}
+        
 </div>
 
+{#
 <!--- Ventana modal que aparece al crear un nuevho chat con alguno de los botones -->
 <div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="chatModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form method="post" action="{{ url_for('nuevo_chat', userid=current_user.id) }}">
+        <form method="post" action="{{ url_for('chats', userid=current_user.id) }}">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="chatModalLabel">Nuevo chat</h5>
@@ -148,5 +154,6 @@
         </form>
     </div>
 </div>
+#}
 
 {% endblock %}
