@@ -31,7 +31,7 @@ def login():
         return redirect(url_for('index'))
     else:
         error = None
-        form = LoginForm(None if request.method != 'POST' else request.form)
+        form = LoginForm()
         if form.validate_on_submit():
             if form.email.data != 'admin@um.es' or form.password.data != 'admin':
                 error = 'Invalid Credentials. Please try again.'
