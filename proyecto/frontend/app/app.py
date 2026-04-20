@@ -1,6 +1,5 @@
 from flask import Flask, render_template, send_from_directory, url_for, request, redirect
-from flask_login import LoginManager, login_manager, current_user, login_user, login_required, logout_user
-import requests
+from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 import os
 
 # Usuarios
@@ -33,7 +32,7 @@ def login():
     else:
         error = None
         form = LoginForm(None if request.method != 'POST' else request.form)
-        if request.method == "POST" and form.validate():
+        if form.validate_on_submit():
             if form.email.data != 'admin@um.es' or form.password.data != 'admin':
                 error = 'Invalid Credentials. Please try again.'
             else:
