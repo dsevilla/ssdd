@@ -1,6 +1,5 @@
-from flask import Flask, render_template, send_from_directory, url_for, request, redirect
+from flask import Flask, render_template, send_from_directory, url_for, redirect
 from flask_login import LoginManager, login_manager, current_user, login_user, login_required, logout_user
-import requests
 import os
 
 # Usuarios
@@ -30,20 +29,20 @@ def index():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
-    else:
-        error = None
-        form = LoginForm(None if request.method != 'POST' else request.form)
-        if request.method == "POST" and form.validate():
-            if form.email.data != 'admin@um.es' or form.password.data != 'admin':
-                error = 'Invalid Credentials. Please try again.'
-            else:
-                user = User(1, 'admin', form.email.data.encode('utf-8'),
-                            form.password.data.encode('utf-8'))
-                users.append(user)
-                login_user(user, remember=form.remember_me.data)
-                return redirect(url_for('index'))
 
-        return render_template('login.html', form=form,  error=error)
+    error: str | None = None
+    form = LoginForm()
+    if form.validate_on_submit():
+        if form.email.data != 'admin@um.es' or form.password.data != 'admin':
+            error = 'Invalid Credentials. Please try again.'
+        else:
+            user = User(1, 'admin', form.email.data.encode('utf-8'),
+                        form.password.data.encode('utf-8'))
+            users.append(user)
+            login_user(user, remember=form.remember_me.data)
+            return redirect(url_for('index'))
+
+    return render_template('login.html', form=form,  error=error)
 
 @app.route('/profile')
 @login_required
