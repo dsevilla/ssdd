@@ -5,20 +5,21 @@ users: list["User"] = []
 
 class User(UserMixin):
 
-    def __init__(self, id, name, email, password, is_admin=False):
-        self.id = id
-        self.name = name
-        self.email = email
-        self.password = hashlib.sha256(password).hexdigest()
-        self.is_admin = is_admin
+    def __init__(self, id: int, name: str, email: str, password: bytes, is_admin: bool = False):
+        self.id: int = id
+        self.name: str = name
+        self.email: str = email
+        self.password: str = hashlib.sha256(password).hexdigest()
+        self.is_admin: bool = is_admin
 
-    def set_password(self, password):
-        self.password = hashlib.sha256(password).hexdigest()
+    def set_password(self, password: bytes):
+        self.password: str = hashlib.sha256(password).hexdigest()
 
-    def check_password(self, password):
+    def check_password(self, password: bytes):
         return self.password == hashlib.sha256(password).hexdigest()
 
-    def get_user(email):
+    @staticmethod
+    def get_user(email: str):
         for user in users:
             if user.email == email:
                 return user

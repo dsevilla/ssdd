@@ -143,4 +143,6 @@ if __name__ == '__main__':
     # Start the download of the model, if needed
     Thread(target=init_model_and_process_requests).start()
 
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5020)))
+    # Respect FLASK_DEBUG environment variable so production can disable the debugger
+    debug_env = os.environ.get('FLASK_DEBUG', 'false').lower() in ('1', 'true', 'yes')
+    app.run(debug=debug_env, host='0.0.0.0', port=int(os.environ.get('PORT', 5020)))

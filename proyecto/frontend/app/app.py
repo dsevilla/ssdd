@@ -36,7 +36,7 @@ def login():
         if form.email.data != 'admin@um.es' or form.password.data != 'admin':
             error = 'Invalid Credentials. Please try again.'
         else:
-            user = User(1, 'admin', form.email.data.encode('utf-8'),
+            user = User(1, 'admin', form.email.data,
                         form.password.data.encode('utf-8'))
             users.append(user)
             login_user(user, remember=form.remember_me.data)
@@ -63,4 +63,6 @@ def load_user(user_id):
     return None
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5010)))
+    # Respect FLASK_DEBUG environment variable so production can disable the debugger
+    debug_env: bool = os.environ.get('FLASK_DEBUG', 'false').lower() in ('1', 'true', 'yes')
+    app.run(debug=debug_env, host='0.0.0.0', port=int(os.environ.get('PORT', 5010)))
