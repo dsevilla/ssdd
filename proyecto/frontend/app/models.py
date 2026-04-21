@@ -1,7 +1,7 @@
 from flask_login import UserMixin
 import hashlib
 
-users = []
+users: list["User"] = []
 
 class User(UserMixin):
 
