@@ -2,7 +2,6 @@ JAVA_VERSION ?= 17
 
 backend-grpc:
 	(cd es.um.sisdist.backend.grpc.GrpcService \
-	(cd es.um.sisdist.backend.grpc.GrpcService \
 		&& docker run \
 		   -v $$(pwd):/var/maven \
 		   -v ~/.m2:/var/maven/.m2 -t \
@@ -12,6 +11,7 @@ backend-grpc:
 		   -e JAVA_VERSION=$(JAVA_VERSION) \
 		   maven:3-eclipse-temurin-$(JAVA_VERSION) \
 		   mvn -B -e -C -Duser.home=/var/maven -DskipTests clean install)
+
 	(cd es.um.sisdist.backend.grpc.GrpcServiceImpl \
 		&& docker run \
 		   -v $$(pwd):/var/maven \
