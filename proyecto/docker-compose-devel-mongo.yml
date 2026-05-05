@@ -40,19 +40,29 @@ services:
       start_period: 20s
 
   backend-rest:
-    build: backend-rest/es.um.sisdist.backend.Service/.
+    build:
+      context: backend-rest/es.um.sisdist.backend.Service/.
+      args:
+        JAVA_VERSION: ${JAVA_VERSION:-17}
     ports:
       - 8080:8080
     env_file: mongo.env
+    environment:
+      - JAVA_VERSION=${JAVA_VERSION:-17}
     depends_on:
       db-mongo:
         condition: service_healthy
 
   backend-grpc:
-    build: backend-grpc/es.um.sisdist.backend.grpc.GrpcServiceImpl/.
+    build:
+      context: backend-grpc/es.um.sisdist.backend.grpc.GrpcServiceImpl/.
+      args:
+        JAVA_VERSION: ${JAVA_VERSION:-17}
     ports:
       - 50051:50051
     env_file: mongo.env
+    environment:
+      - JAVA_VERSION=${JAVA_VERSION:-17}
     depends_on:
       db-mongo:
         condition: service_healthy

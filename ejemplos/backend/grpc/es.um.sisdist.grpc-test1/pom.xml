@@ -4,8 +4,9 @@
   <artifactId>grpc-test1</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <java.version>${env.JAVA_VERSION}</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     <mainClass>es.um.sisdist.helloworld.HelloWorldServer</mainClass>
     <exec.mainClass>${mainClass}</exec.mainClass>

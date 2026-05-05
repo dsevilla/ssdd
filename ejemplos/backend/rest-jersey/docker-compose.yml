@@ -1,7 +1,11 @@
 services:
 
   backend-rest:
-    build: .
+    build:
+      context: .
+      args:
+        JAVA_VERSION: ${JAVA_VERSION:-17}
     ports:
       - 8080:8080
-
+    environment:
+      - JAVA_VERSION=${JAVA_VERSION:-17}

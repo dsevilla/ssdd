@@ -7,11 +7,16 @@ on:
     branches: [ '25-26', '24-25', '23-24', 'v*' ]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [17, 21, 25]
+    env:
+      JAVA_VERSION: ${{ matrix.java-version }}
     defaults:
       run:
         working-directory: proyecto
@@ -20,16 +25,12 @@ jobs:
       - name: Checkout the repo.
         uses: actions/checkout@v6
 
-      - name: Cache Maven local repository
-        uses: actions/cache@v5
+      - name: Set up JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v5
         with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - name: Create an empty .m2 directory for the default user. If not, scripts may fail
-        run: mkdir -p ~/.m2
+          distribution: temurin
+          java-version: ${{ matrix.java-version }}
+          cache: 'maven'
 
       - name: build proyecto
         run: make
